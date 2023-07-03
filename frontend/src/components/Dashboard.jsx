@@ -32,7 +32,9 @@ function Dashboard({ code }) {
         // Put the spotify data into user account in firebase.
         const db = getFirestore();
         const userDocRef = doc(db, "users", uid);
-        setDoc(userDocRef, { spotify: "https://open.spotify.com/"})
+        setDoc(userDocRef, { spotify: {
+            top100: [{}]
+        }})
         .then(() => {
             console.log("YouTube link added to user successfully");
         })

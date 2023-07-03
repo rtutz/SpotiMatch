@@ -2,10 +2,12 @@ import { auth } from '../services/firebase/config'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import {useDispatch} from'react-redux';
 import { setUser } from '../features/userSlice';
-import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const submitSignup = (e) => {
         e.preventDefault();  
@@ -30,6 +32,7 @@ function Signup() {
             })
         // }
         
+        navigate('/link')
         e.target.reset();
     }
 
