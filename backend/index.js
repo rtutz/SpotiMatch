@@ -44,7 +44,7 @@ app.post('/login/auth', (req, res) => {
 });
 
 app.post('/login/refresh', (req, res) => {
-  const refresh_token = req.body.refresh_token;
+  const refresh_token = req.body.refreshToken;
 
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.CLIENT_ID,
@@ -52,6 +52,8 @@ app.post('/login/refresh', (req, res) => {
     redirectUri: "http://localhost:5173/",
     refreshToken: refresh_token,
   });
+
+
 
   spotifyApi.refreshAccessToken().then(
       (data) => {
