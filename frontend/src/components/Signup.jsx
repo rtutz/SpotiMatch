@@ -18,8 +18,8 @@ function Signup() {
         // const passwordVerify = e.target.passwordVerify.value;
 
         // if (password === passwordVerify) {
-            createUserWithEmailAndPassword(auth, email, password).then(
-                userCredentials => {
+            createUserWithEmailAndPassword(auth, email, password)
+            .then(userCredentials => {
                     const {uid, email, refreshToken} = userCredentials.user;
                     dispatch(setUser({uid, email}))
 

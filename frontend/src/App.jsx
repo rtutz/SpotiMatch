@@ -1,6 +1,6 @@
 import './App.css'
 import SpotifyLink from './components/SpotifyLink';
-// import Dashboard from './components/Dashboard';
+import Dashboard from './components/Dashboard';
 // import { useSelector } from 'react-redux';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -32,6 +32,7 @@ function App() {
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/link' element={<SpotifyLink/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>
   )
 }
