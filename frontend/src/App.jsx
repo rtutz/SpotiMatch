@@ -1,5 +1,5 @@
 import './App.css'
-import Login from './components/Login';
+import SpotifyLink from './components/SpotifyLink';
 import Dashboard from './components/Dashboard';
 
 const code = new URLSearchParams(window.location.search).get('code');
@@ -7,7 +7,7 @@ const code = new URLSearchParams(window.location.search).get('code');
 function App() {
   return (
     <>
-    {code ? <Dashboard code={code}/> :<Login/> }
+    {code ? <Dashboard code={code}/> :<SpotifyLink/> }
     </>
   )
 }

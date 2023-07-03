@@ -3,6 +3,6 @@ import accessTokenReducer from '../features/accessTokenSlice';
 
 export const store = configureStore({
     reducer: {
-        accessToken: accessTokenReducer
+        accessToken: accessTokenReducer,
         }
 })

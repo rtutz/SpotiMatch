@@ -1,4 +1,4 @@
-function Login(){
+function SpotifyLink(){
     return (
         <div>
             <a href="http://localhost:3000/login/link">Connect with Spotify</a>
@@ -6,4 +6,4 @@ function Login(){
     )
 }
 
-export default Login
+export default SpotifyLink

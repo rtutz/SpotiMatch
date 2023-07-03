@@ -20,8 +20,6 @@ function Dashboard({ code }) {
         spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE').then(data => {
             console.log(data.body);
         })
-
-        spotifyApi.getAudioAnalysisForTrack('3Qm86XLflmIXVm1wcwkgDK').then(data => {console.log(data.body)});
     }
 
     return (
