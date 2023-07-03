@@ -18,12 +18,12 @@ function Signup() {
         // if (password === passwordVerify) {
             createUserWithEmailAndPassword(auth, email, password).then(
                 userCredentials => {
-                    const {uid, email} = userCredentials.user;
+                    const {uid, email, refreshToken} = userCredentials.user;
                     dispatch(setUser({uid, email}))
 
                     // Set cookie so when reload occurs, user is still logged in
                     const cookies = new Cookies();
-                    cookies.set('auth-token', userCredentials.user.refreshToken); 
+                    cookies.set('auth-token', JSON.stringify({uid, email, refreshToken})); 
                 }
             ).catch(error => {
                 console.log(error);

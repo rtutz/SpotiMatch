@@ -4,12 +4,8 @@ import Dashboard from './components/Dashboard';
 import { useSelector } from 'react-redux';
 import Signup from './components/Signup';
 import Cookies from 'universal-cookie'
-// import LoginOrSignup from './components/LoginOrSignUp';
-
 const cookie = new Cookies();
-
-import { getAuth } from "firebase/auth";
-const auth = getAuth();
+// import LoginOrSignup from './components/LoginOrSignUp';
 
 const code = new URLSearchParams(window.location.search).get('code');
 

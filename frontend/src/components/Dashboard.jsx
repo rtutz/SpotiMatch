@@ -7,12 +7,16 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 import { useSelector } from 'react-redux'; 
 
+import Cookies from 'universal-cookie'
+const cookie = new Cookies();
+
 // This serves as the whole Dashboard after logging in.
 // eslint-disable-next-line react/prop-types
 function Dashboard({ code }) {
     const accessToken = useAuth(code);
     const dispatch = useDispatch();
-    const uid = useSelector((state) => state.user.uid);
+    const cookieUser = cookie.get('auth-token');
+    const uid = cookieUser.uid
     console.log('UID STATE', uid);
 
     dispatch(setAccessToken(accessToken));
@@ -26,15 +30,15 @@ function Dashboard({ code }) {
         spotifyApi.setAccessToken(accessToken);
 
         // Put the spotify data into user account in firebase.
-        // const db = getFirestore();
-        // const userDocRef = doc(db, "users", uid);
-        // setDoc(userDocRef, { spotify: "https://open.spotify.com/"})
-        // .then(() => {
-        //     console.log("YouTube link added to user successfully");
-        // })
-        //     .catch((error) => {
-        //     console.error("Error adding YouTube link to user: ", error);
-        // });
+        const db = getFirestore();
+        const userDocRef = doc(db, "users", uid);
+        setDoc(userDocRef, { spotify: "https://open.spotify.com/"})
+        .then(() => {
+            console.log("YouTube link added to user successfully");
+        })
+            .catch((error) => {
+            console.error("Error adding YouTube link to user: ", error);
+        });
 
 
         // -------------------------------
@@ -43,7 +47,7 @@ function Dashboard({ code }) {
 
     return (
         <>
-        <h1>{accessToken}</h1>
+        <h1>Dashboard</h1>
         </>
     )
 
