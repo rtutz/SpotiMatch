@@ -33,7 +33,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/link" element={<SpotifyLink />} />
       <Route path="/dashboard" element={<Dashboard code={code} />}>
-        <Route path="chat" element={<Chat />} />
+        <Route path="chat" element={<Chat receiverUID={'pzo5WEtdyuUqb4sByjWh0NN0vlQ2'}/>} />
       </Route>
   </Routes>
   )
