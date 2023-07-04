@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors');
 const querystring = require('querystring');
 const SpotifyWebApi = require('spotify-web-api-node');
+const calculateSimilarityScore = require('./spawn')
 
 app.use(cors());
 app.use(express.json());
@@ -64,6 +65,19 @@ app.post('/login/refresh', (req, res) => {
       })
 })
 
+app.post('/calculate', async (req, res) => {
+  const playlist1 = req.body.playlist1;
+  const playlist2 = req.body.playlist2;
+
+  try {
+    const val = await calculateSimilarityScore(playlist1, playlist2);
+    console.log(val);
+    res.json(val);
+  } catch (error) {
+    console.log(error);
+    res.json(error)
+  }
+});
 
 
 app.listen(3000, () => {console.log('listening on port 3000')});
