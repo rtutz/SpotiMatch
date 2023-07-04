@@ -5,7 +5,7 @@ const app = express();
 const cors = require('cors');
 const querystring = require('querystring');
 const SpotifyWebApi = require('spotify-web-api-node');
-const calculateSimilarityScore = require('./spawn')
+const calculateSimilarityScore = require('./pullPython')
 
 app.use(cors());
 app.use(express.json());
