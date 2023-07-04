@@ -2,10 +2,9 @@ import useAuth from '../hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-node';
 import { setAccessToken } from '../features/accessTokenSlice';
+import {Link, Outlet} from 'react-router-dom';
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
-
-import { useSelector } from 'react-redux'; 
 
 import Cookies from 'universal-cookie'
 const cookie = new Cookies();
@@ -16,8 +15,10 @@ function Dashboard({ code }) {
     const accessToken = useAuth(code);
     const dispatch = useDispatch();
     const cookieUser = cookie.get('auth-token');
-    const uid = cookieUser.uid
-    console.log('UID STATE', uid);
+    const uid = cookieUser.uid;
+
+    // Remove later:
+    console.log('code', code);
 
     dispatch(setAccessToken(accessToken));
 
@@ -49,7 +50,11 @@ function Dashboard({ code }) {
 
     return (
         <>
-        <h1>Dashboard</h1>
+        <h3>Dashboard</h3>
+        <button>
+            <Link to="/dashboard/chat">Chat</Link>
+        </button>
+        <Outlet/>
         </>
     )
 
