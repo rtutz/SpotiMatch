@@ -8,6 +8,18 @@ import {
     onSnapshot} from "firebase/firestore";
 import Cookies from "universal-cookie";
 
+function encodeStrings(str1, str2) {
+    const delimiter = '|';
+    const sortedStrings = [str1, str2].sort();
+    return sortedStrings.join(delimiter);
+  }
+  
+  function decodeString(encodedStr) {
+    const delimiter = '|';
+    const sortedStrings = encodedStr.split(delimiter).sort();
+    return sortedStrings;
+  }
+
 const cookies = new Cookies();
 // for props, we have to get chatId and UID of person to send to to.
 // Sender: bFPNFGYEOKPzL6ypqQXNE7iISIq1
@@ -22,8 +34,9 @@ function Chat({receiverUID}) {
     const user = cookies.get('auth-token');
 
     const db = getFirestore();
-    const roomId = user.uid + receiverUID;
+    const roomId = encodeStrings(user.uid, receiverUID);
     const chatRoomRef =  doc(collection(db, 'chatRooms'), roomId);
+    setDoc(chatRoomRef, {participants: [user.uid, receiverUID]});
     const messagesCollectionRef = collection(chatRoomRef, 'messages');
 
 
