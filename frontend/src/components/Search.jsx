@@ -22,7 +22,7 @@ export default function Search() {
             });
             setPeople(tempPeople);
         })
-    }, [])
+    }, []);
 
     const handleFocus = () => {
         setIsActive(true);
@@ -31,9 +31,12 @@ export default function Search() {
       const handleBlur = () => {
         setTimeout(() => {
             setIsActive(false);
-        }, 500);
+        }, 100);
       };
 
+      const curr = people.filter(person => person.email.includes(queryName));
+
+    console.log('Current people:', curr);
     // Do a slice when passing people to DisplayPeople
     return (
         <div>
@@ -44,7 +47,7 @@ export default function Search() {
                     onBlur={handleBlur}/>
                     <button type="submit">Search</button>
             </form>
-            {isActive && <DisplayPeople people={people}/>}
+            {isActive && <DisplayPeople people={curr}/>}
         </div>
         
     )

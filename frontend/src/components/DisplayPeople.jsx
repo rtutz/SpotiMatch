@@ -6,7 +6,7 @@ export default function DisplayPeople({people}) {
         <div>
             <h1>People</h1>
             {people.map(person => {return (
-                <h3 key={person.id}>
+                <h3 key={person.uid}>
                 <Link to={`/dashboard/all/chat/${person.uid}`}>
                     {person.email}
                 </Link>

@@ -15,7 +15,7 @@ import Search from "./Search";
 
 function AllChats() {
     const [pplWithConvo, setPplWithConvo] = useState([]);
-    console.log(auth.currentUser);
+
     const user = auth.currentUser;
     // const user = {uid: '8738wVe5QwaYOCNWDbj96J2xPxs1'}
 

@@ -44,7 +44,7 @@ function Chat() {
       onSnapshot(queryMessages, (snapshot) => {
           let messagesList = [];
           snapshot.forEach((doc) => {
-              messagesList.push({ ...doc.data(), id: doc.id });
+              messagesList.push({ ...doc.data() });
           });
           console.log(messagesList);
           setMessages(messagesList);
@@ -59,18 +59,12 @@ function Chat() {
       
       // Set necessary information to send to firebase.
       const content = e.target.currentMessage.value;
-
+      if (content === '') return;
       const message = {
           content,
           senderUID: user.uid,
           receiverUID: receiverUID,
       }
-      
-      // const db = getFirestore();
-
-      // Successfully creates a message to database using proper data structure.
-      // const chatRoomRef =  doc(collection(db, 'chatRooms'), roomId);
-      // const messagesCollectionRef = collection(chatRoomRef, 'messages');
 
       await setDoc(doc(messagesCollectionRef), message);
       e.target.reset();
