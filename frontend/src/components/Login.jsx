@@ -23,7 +23,7 @@ function Login() {
             // Set cookie so when reload occurs, user is still logged in
             const cookies = new Cookies();
             cookies.set('auth-token', JSON.stringify({uid, email, refreshToken})); 
-            navigate('/dashboard');
+            navigate('/link');
         }
     ).catch(error => {
         console.log(error);

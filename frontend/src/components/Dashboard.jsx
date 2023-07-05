@@ -22,6 +22,9 @@ function Dashboard({ code }) {
     const spotifyApi = new SpotifyWebApi({
         clientId: '631b762d9a804f58ab171d8e7eb15ef0'
     });
+
+    // Clear dashboard URL
+    // window.history.pushState({}, null, "/dashboard");
     
     // This is just for testing purposes. Remove later
     // if (accessToken) {
@@ -49,7 +52,7 @@ function Dashboard({ code }) {
         <>
         <h3>Dashboard</h3>
         <button>
-            <Link to="/dashboard/chat">Chat</Link>
+            <Link to="/dashboard/all">Open chat options</Link>
         </button>
         <Outlet/>
         </>

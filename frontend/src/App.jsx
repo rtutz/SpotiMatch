@@ -1,9 +1,12 @@
 import './App.css'
+
 import SpotifyLink from './components/SpotifyLink';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Chat from './components/Chat';
+import AllChats from './components/AllChats';
+
 // import Cookies from 'universal-cookie'
 import { Route, Routes } from "react-router-dom"
 // const cookie = new Cookies();
@@ -33,7 +36,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/link" element={<SpotifyLink />} />
       <Route path="/dashboard" element={<Dashboard code={code} />}>
-        <Route path="chat" element={<Chat receiverUID={'pzo5WEtdyuUqb4sByjWh0NN0vlQ2'}/>} />
+        <Route path='all' element= {<AllChats />} >
+          <Route path="chat/:receiverUID" element={<Chat />} />
+        </Route>
       </Route>
   </Routes>
   )
