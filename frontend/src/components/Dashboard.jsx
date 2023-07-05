@@ -2,9 +2,11 @@ import useAuth from '../hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-node';
 import { setAccessToken } from '../features/accessTokenSlice';
-import {Link, Outlet} from 'react-router-dom';
+import {Link, Outlet, Navigate} from 'react-router-dom';
+import logo from '../assets/logo.svg'
 
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faMicrophone, faMusic, faCompactDisc, faComment } from '@fortawesome/free-solid-svg-icons';
 
 import Cookies from 'universal-cookie'
 const cookie = new Cookies();
@@ -12,10 +14,16 @@ const cookie = new Cookies();
 // This serves as the whole Dashboard after logging in.
 // eslint-disable-next-line react/prop-types
 function Dashboard({ code }) {
+    const cookieBrowser = cookie.get('auth-token');
+
     const accessToken = useAuth(code);
     const dispatch = useDispatch();
-    const cookieUser = cookie.get('auth-token');
-    const uid = cookieUser.uid;
+
+    if (!cookieBrowser) {
+        return <Navigate to='/'></Navigate>
+    }
+    // const cookieUser = cookie.get('auth-token');
+    // const uid = cookieUser.uid;
 
     dispatch(setAccessToken(accessToken));
 
@@ -50,10 +58,37 @@ function Dashboard({ code }) {
 
     return (
         <>
-        <h3>Dashboard</h3>
-        <button>
-            <Link to="/dashboard/all">Open chat options</Link>
-        </button>
+        <div className='bg-gray-900-spotify min-h-screen sticky w-28'>
+            <img src={logo} alt="" />
+
+            <div className='text-center'>
+            <FontAwesomeIcon icon={faUser} size='xl' className='text-gray-300'/>
+            <p>Profile</p>
+            </div>
+
+            <div className='text-center'>
+            <FontAwesomeIcon icon={faMicrophone} size='xl' className='text-gray-300'/>
+            <p>Top Artists</p>
+            </div>
+
+            <div className='text-center'>
+            <FontAwesomeIcon icon={faMusic} size='xl' className='text-gray-300'/>
+            <p>Top Tracks</p>
+            </div>
+
+            <div className='text-center'>
+            <FontAwesomeIcon icon={faCompactDisc} size='xl' className='text-gray-300'/>
+            <p>Playlist</p>
+            </div>
+
+            <Link to='/dashboard/all'>
+            <div className='text-center'>
+            <FontAwesomeIcon icon={faComment} size='xl' className='text-gray-300'/>
+            <p>Chat</p>
+            </div>
+            </Link>
+        </div>
+
         <Outlet/>
         </>
     )
