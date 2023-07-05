@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { getFirestore, 
     collection, 
     query, 
-    onSnapshot, 
-    collectionGroup} from "firebase/firestore";
+    onSnapshot} from "firebase/firestore";
 import { auth } from '../services/firebase/config'
 import { Link } from "react-router-dom";
+
+import Search from "./Search";
 
 // This component renders all the chats we've done before. This is necessary
 // since it supplies the chatID (i.e. what chat is currently open) to Chat.jsx
@@ -14,7 +15,7 @@ import { Link } from "react-router-dom";
 
 function AllChats() {
     const [pplWithConvo, setPplWithConvo] = useState([]);
-
+    console.log(auth.currentUser);
     const user = auth.currentUser;
     // const user = {uid: '8738wVe5QwaYOCNWDbj96J2xPxs1'}
 
@@ -30,11 +31,8 @@ function AllChats() {
             querySnapshot.forEach((doc) => {
                 const docId = doc.id;
                 const participants = doc.data().participants;
-                console.log('PARTICIPANTS:', participants);
 
                 // Access messages within this doc
-                console.log('user UID:', user.uid);
-                console.log('USER IN PARTICIPANTS', (participants[0] === user.uid || participants[1] === user.uid))
                 if (participants.includes(user.uid)) {
                     const otherUser = participants.filter(p => p!== user.uid)[0];
                     pplList.push({docId, receiverUID: otherUser });
@@ -45,20 +43,21 @@ function AllChats() {
 
     }, [])
 
-    console.log(pplWithConvo);
 
     return (
         <div>
             <h1>All Chats</h1>
-            <ul>
-            {pplWithConvo.map((chat) => (
-            <li key={chat.receiverUID}>
-                <Link to={`/dashboard/all/chat/${chat.receiverUID}`}>
-                {chat.receiverUID}
-                </Link>
-            </li>
-            ))}
-      </ul>
+            <Search />
+            <h3>Past converstations</h3>
+                <ul>   
+                {pplWithConvo.map((chat) => (
+                <li key={chat.receiverUID}>
+                    <Link to={`/dashboard/all/chat/${chat.receiverUID}`}>
+                    {chat.receiverUID}
+                    </Link>
+                </li>
+                ))}
+                </ul>
       <Outlet />
         </div>
     )
