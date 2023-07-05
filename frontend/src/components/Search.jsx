@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import DisplayPeople from "./DisplayPeople";
 import { getFirestore, collection, query, onSnapshot} from "firebase/firestore";
-import {auth} from '../services/firebase/config';
 
 export default function Search() {
     const [isActive, setIsActive] = useState(false);
     const [people, setPeople] = useState([]);
     const [queryName, setQueryName] = useState("");
-    const [currPeople, setCurrPeople] = useState([]);
 
     console.log(people);
 
