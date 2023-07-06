@@ -38,7 +38,7 @@ function Login() {
 
     return (
         <>
-        <form action="submit" onSubmit={submitLogin}>
+        <form action="submit" className='text-black' onSubmit={submitLogin}>
             <input type="text" name="email" placeholder="Email" />
             <input type="password" name="password" placeholder="Password" />
             <button type="submit">Login</button>

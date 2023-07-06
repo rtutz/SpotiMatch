@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { getProfilePicture } from "../services/API/api";
 import { useSelector } from 'react-redux';
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 
 export default function Profile() { 
@@ -16,17 +17,16 @@ export default function Profile() {
 
     useEffect(() => {
         if (!tempAccessToken) return;
-
         getProfilePicture(tempAccessToken).then(data => {
-            console.log(data.data);
             setProfileData(data.data)
         }).catch(e => {
-            console.error(e);
+            console.log('in profile use effect error handling');
+            console.error(e)
+            return <Navigate to='/' replace={true} />
         })
     }, [tempAccessToken])
 
     if (profileData) {
-        console.log(profileData);
         return (
             <>
                 <div>

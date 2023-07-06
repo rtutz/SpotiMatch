@@ -52,7 +52,7 @@ function Signup() {
 
     return (
         <>
-        <form action="submit" onSubmit={submitSignup}>
+        <form action="submit" onSubmit={submitSignup} className='text-black'>
             {/* <input type="text" name="username" placeholder="Username" /> */}
             <input type="text" name="email" placeholder="Email" />
             <input type="password" name="password" placeholder="Password" />
