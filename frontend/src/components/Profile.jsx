@@ -27,12 +27,13 @@ export default function Profile() {
     }, [tempAccessToken])
 
     if (profileData) {
+        console.log(profileData);
         return (
             <>
-                <div>
-                    <h1>Test</h1>
-                    <img src={profileData.images[1].url} alt="" />
-                </div>
+            <div className="relative">
+                <img src={profileData.images[1].url} alt="" className="object-cover h-40 w-40 rounded-full" />
+                <h1>{profileData.display_name}</h1>
+            </div>
             </>
     )
     } else {
