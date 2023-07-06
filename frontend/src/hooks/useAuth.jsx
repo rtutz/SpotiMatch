@@ -9,37 +9,84 @@ function useAuth(code){
     const [expiresIn, setExpiresIn] = useState(null);
 
     const dispatch = useDispatch();
-    
-    // Initializes the spotify API tokens.
+
+    // Retrieves tokens from localStorage if available on initial render
+    useEffect(() => {
+        const storedAccessToken = localStorage.getItem('accessToken');
+        const storedRefreshToken = localStorage.getItem('refreshToken');
+        const storedExpiresIn = localStorage.getItem('expiresIn');
+
+        if (storedAccessToken && storedRefreshToken && storedExpiresIn) {
+            setAccessTokenState(storedAccessToken);
+            setRefreshToken(storedRefreshToken);
+            setExpiresIn(storedExpiresIn);
+            dispatch(setAccessToken(storedAccessToken));
+        }
+    }, [dispatch]);
+
+    // Retrieves tokens from localStorage if available on initial render
+    useEffect(() => {
+        const storedAccessToken = localStorage.getItem('accessToken');
+        const storedRefreshToken = localStorage.getItem('refreshToken');
+        const storedExpiresIn = localStorage.getItem('expiresIn');
+
+        if (storedAccessToken && storedRefreshToken && storedExpiresIn) {
+            setAccessTokenState(storedAccessToken);
+            setRefreshToken(storedRefreshToken);
+            setExpiresIn(storedExpiresIn);
+            dispatch(setAccessToken(storedAccessToken));
+        }
+    }, []);
+
+    // Saves tokens to localStorage whenever they change
+    useEffect(() => {
+        if (accessToken && refreshToken && expiresIn) {
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+            localStorage.setItem('expiresIn', expiresIn);
+        }
+    }, [accessToken, refreshToken, expiresIn]);
+
+    // Initializes the Spotify API tokens
     useEffect(() => {
         if (!code) return;
-        axios.post('http://localhost:3000/login/auth', {code}
-        ).then((res) => {
-            if (res.data.statusCode === 400) throw console.error(res.data.body);
-            setAccessTokenState(res.data.access_token);
-            setRefreshToken(res.data.refresh_token);
-            setExpiresIn(res.data.expires_in);
-            dispatch(setAccessToken(res.data.access_token))
-        }).catch((err) => {
-            console.log(err);
-        }); 
-    }, 
-    [code]);
+        
+        const storedAccessToken = localStorage.getItem('accessToken');
+        const storedRefreshToken = localStorage.getItem('refreshToken');
+        const storedExpiresIn = localStorage.getItem('expiresIn');
 
-    // automatically refresh the tokens.
+        if (storedAccessToken && storedRefreshToken && storedExpiresIn) return
+        axios.post('http://localhost:3000/login/auth', {code})
+            .then((res) => {
+                if (res.data.statusCode === 400) throw console.error(res.data.body);
+                setAccessTokenState(res.data.access_token);
+                setRefreshToken(res.data.refresh_token);
+                setExpiresIn(res.data.expires_in);
+                dispatch(setAccessToken(res.data.access_token));
+            })
+            .catch((err) => {
+                console.log('in useAuth error');
+                console.log(err);
+            }); 
+    }, [code, dispatch]);
+
+    // Automatically refreshes the tokens
     useEffect(() => {
         if (!refreshToken || !expiresIn) return;
 
-        // If we have a resfresh token, then do this:
         const interval = setInterval(() => {
-            axios.post('http://localhost:3000/login/refresh', {refreshToken}).then((res) => {
-                setAccessTokenState(res.data.access_token);
-                setExpiresIn(res.data.expires_in);
-            })
-        }, (expiresIn - 60) * 1000)
+            axios.post('http://localhost:3000/login/refresh', {refreshToken})
+                .then((res) => {
+                    setAccessTokenState(res.data.access_token);
+                    setExpiresIn(res.data.expires_in);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }, (expiresIn - 60) * 1000);
 
         return () => clearInterval(interval);
-    },[refreshToken, expiresIn]);
+    }, [refreshToken, expiresIn]);
 
     return accessToken;
 }
