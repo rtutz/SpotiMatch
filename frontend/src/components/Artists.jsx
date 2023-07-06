@@ -1,8 +1,8 @@
-export default function Profile() {
+export default function TopArtists() {
     return (
         <>
             <div>
-                <h1>PROFILE</h1>
+                <h1>TOPARTISTS</h1>
             </div>
         </>
     )

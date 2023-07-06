@@ -57,29 +57,37 @@ function Dashboard({ code }) {
 
 
     return (
-        <>
+        <div className='flex'>
         <div className='bg-gray-900-spotify min-h-screen sticky w-28'>
             <img src={logo} alt="" />
 
+            <Link to='/dashboard/profile'>
             <div className='text-center'>
             <FontAwesomeIcon icon={faUser} size='xl' className='text-gray-300'/>
             <p>Profile</p>
             </div>
+            </Link>
 
+            <Link to='/dashboard/artists'>
             <div className='text-center'>
             <FontAwesomeIcon icon={faMicrophone} size='xl' className='text-gray-300'/>
             <p>Top Artists</p>
             </div>
+            </Link>
 
+            <Link to='/dashboard/tracks'>
             <div className='text-center'>
             <FontAwesomeIcon icon={faMusic} size='xl' className='text-gray-300'/>
             <p>Top Tracks</p>
             </div>
+            </Link>
 
+            <Link to='/dashboard/playlist'>
             <div className='text-center'>
             <FontAwesomeIcon icon={faCompactDisc} size='xl' className='text-gray-300'/>
             <p>Playlist</p>
             </div>
+            </Link>
 
             <Link to='/dashboard/all'>
             <div className='text-center'>
@@ -90,7 +98,7 @@ function Dashboard({ code }) {
         </div>
 
         <Outlet/>
-        </>
+        </div>
     )
 
     // return (

@@ -18,7 +18,7 @@ app.get('/login/link', (req, res) => {
       response_type: 'code',
       client_id: process.env.CLIENT_ID,
       scope: scope,
-      redirect_uri: "http://localhost:5173/dashboard",
+      redirect_uri: "http://localhost:5173/dashboard/profile",
     }));
 });
 

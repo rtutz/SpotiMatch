@@ -1,8 +1,8 @@
-export default function Profile() {
+export default function Playlist() {
     return (
         <>
             <div>
-                <h1>PROFILE</h1>
+                <h1>Playlist</h1>
             </div>
         </>
     )
