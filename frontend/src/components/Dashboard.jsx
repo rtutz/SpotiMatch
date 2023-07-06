@@ -2,7 +2,7 @@ import useAuth from '../hooks/useAuth';
 import { useDispatch } from 'react-redux';
 // import SpotifyWebApi from 'spotify-web-api-node';
 import { setAccessToken } from '../features/accessTokenSlice';
-import {Link, Outlet, Navigate} from 'react-router-dom';
+import {Link, Outlet, useNavigate} from 'react-router-dom';
 import logo from '../assets/logo.svg'
 import github from '../assets/github.svg'
 
@@ -17,11 +17,13 @@ const cookie = new Cookies();
 function Dashboard({ code }) {
     const cookieBrowser = cookie.get('auth-token');
 
+    const navigate = useNavigate();
+
     const accessToken = useAuth(code);
     const dispatch = useDispatch();
 
     if (!cookieBrowser) {
-        return <Navigate to='/'></Navigate>
+        navigate('/');
     }
     // const cookieUser = cookie.get('auth-token');
     // const uid = cookieUser.uid;

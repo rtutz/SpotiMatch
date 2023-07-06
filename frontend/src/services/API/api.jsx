@@ -20,25 +20,12 @@ export const getProfileData = async (accessToken) => {
         const topTracks = await axios.get('https://api.spotify.com/v1/me/top/tracks', config);
         fData.topTracks = topTracks.data;
 
+        const playlists = await axios.get('https://api.spotify.com/v1/me/playlists', config);
+        fData.playlists = playlists.data;
+
         return fData
         
     } catch (e) {
         console.log('API ERROR', e)
     }
-}
-
-export const getFollowing = (accessToken) => {
-    console.log('IN GET FOLLOWING', accessToken);
-    axios.get('https://api.spotify.com/v1/me/following?type=artist', {
-    headers: {
-        Authorization: `Bearer ${accessToken}`,
-    },
-    })
-    .then(response => {
-        console.log('success', response);
-    })
-    .catch(error => {
-        console.log('error');
-        console.error('Error:', error);
-    });
 }

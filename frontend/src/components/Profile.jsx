@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { getProfileData } from "../services/API/api";
 import { useSelector } from 'react-redux';
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Profile() { 
@@ -14,6 +14,7 @@ export default function Profile() {
     useAuth(code);
 
     const [profileData, setProfileData] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!tempAccessToken) return;
@@ -23,7 +24,7 @@ export default function Profile() {
         }).catch(e => {
             console.error(e)
             localStorage.clear();
-            return <Navigate to='/'/>
+            navigate('/');
         })
         // const fetchData = async () => {
         //     if (!tempAccessToken) return;
@@ -42,7 +43,12 @@ export default function Profile() {
         //     }
         // }
         // fetchData();
-    }, [tempAccessToken])
+    }, [tempAccessToken]);
+
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/');
+    }
 
     
     if (profileData) {
@@ -53,12 +59,29 @@ export default function Profile() {
 
                 <div className="flex flex-col justify-center items-center">
                     <img src={profileData.currUserProfile.images[1].url} alt="" className="object-cover h-40 w-40 rounded-full" />
-                    <h1 className="font-spotify font-black mt-10 text-4xl">{profileData.currUserProfile.display_name}</h1>
+                    <h1 className="font-spotify font-black mt-10 text-5xl">{profileData.currUserProfile.display_name}</h1>
 
 
-                    <div className="" id="follow">
-                        <h3>{profileData.currUserProfile.followers.total}</h3>
+                    <div className="flex justify-evenly w-full m-6" id="follow">
+                        <div className="flex flex-col items-center justify-center">
+                            <h3 className="text-spotify-green font-black text-xl">{profileData.currUserProfile.followers.total}</h3>
+                            <p className="text-gray-200-spotify text-xs tracking-wider">FOLLOWERS</p>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center">
+                            <h3 className="text-spotify-green font-black text-xl">{profileData.following.artists.total}</h3>
+                            <p className="text-gray-200-spotify text-xs tracking-wider">FOLLOWING</p>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center">
+                            <h3 className="text-spotify-green font-black text-xl">{profileData.playlists.total}</h3>
+                            <p className="text-gray-200-spotify text-xs tracking-wider">PLAYLISTS</p>
+                        </div>
                     </div>
+
+                    <button onClick={handleLogout}>
+                        LOGOUT
+                    </button>
                 </div>
 
                 
