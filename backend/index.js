@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/login/link', (req, res) => { 
-    const scope = 'user-read-private user-read-email playlist-read-private user-follow-read user-library-read';
+    const scope = 'user-read-private user-read-email user-top-read user-follow-read';
 
     res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
