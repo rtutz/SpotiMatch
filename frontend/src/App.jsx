@@ -39,8 +39,8 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/link" element={<SpotifyLink />} />
-      <Route path="/dashboard" element={<Dashboard code={code} />}>
-        <Route path='profile' element={<Profile/>}/>
+      <Route path="/dashboard" element={<Dashboard  />}>
+        <Route path='profile' element={<Profile />}/>
         <Route path='artists' element={<Artists/>}/>
         <Route path='tracks' element={<Tracks/>}/>
         <Route path='playlist' element={<Playlist/>}/>

@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import axios from 'axios';
-import { useSelector } from "react-redux";
+import useAuth from "../hooks/useAuth";
+
+
 
 export default function Profile() { 
-    useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get('code');
 
-    }, [])
+    useAuth(code);
 
     return (
         <>

@@ -20,6 +20,7 @@ function Login() {
             const {uid, email, refreshToken} = userCredentials.user;
             dispatch(setUser({uid, email}))
 
+
             // Set cookie so when reload occurs, user is still logged in
             const cookies = new Cookies();
             cookies.set('auth-token', JSON.stringify({uid, email, refreshToken})); 
