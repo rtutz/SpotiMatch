@@ -38,3 +38,6 @@
   @apply w-full p-20
 }
 
+.btn {
+  @apply bg-transparent border border-white px-6 py-3 rounded-full text-xs tracking-wide font-bold hover:bg-white hover:text-black duration-300 
+}

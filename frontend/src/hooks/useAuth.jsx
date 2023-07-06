@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useDispatch } from "react-redux";
 import { setAccessToken } from "../features/accessTokenSlice";
-
+import {useNavigate} from 'react-router-dom'
 function useAuth(code){
     const [accessToken, setAccessTokenState] = useState(null);
     const [refreshToken, setRefreshToken] = useState(null);
     const [expiresIn, setExpiresIn] = useState(null);
+
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -67,6 +69,7 @@ function useAuth(code){
             .catch((err) => {
                 console.log('in useAuth error');
                 console.log(err);
+                navigate('/')
             }); 
     }, [code, dispatch]);
 
