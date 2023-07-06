@@ -6,5 +6,30 @@
     html {
       @apply text-gray-100;
       @apply bg-gray-700-spotify;
+      @apply font-spotify
     }
+}
+
+@font-face {
+  font-family: Circular;
+  src: url('./assets/font/CircularBook.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Circular;
+  src: url('./assets/font/CircularMedium.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Circular;
+  src: url('./assets/font/CircularBold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: Circular;
+  src: url('./assets/font/CircularBlack.ttf');
+  font-weight: 900;
 }

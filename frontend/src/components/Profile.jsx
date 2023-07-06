@@ -18,11 +18,13 @@ export default function Profile() {
     useEffect(() => {
         if (!tempAccessToken) return;
         getProfilePicture(tempAccessToken).then(data => {
+            if (!data) throw new Error();
             setProfileData(data.data)
         }).catch(e => {
             console.log('in profile use effect error handling');
             console.error(e)
-            return <Navigate to='/' replace={true} />
+            localStorage.clear();
+            return <Navigate to='/'/>
         })
     }, [tempAccessToken])
 
@@ -32,7 +34,7 @@ export default function Profile() {
             <>
             <div className="relative">
                 <img src={profileData.images[1].url} alt="" className="object-cover h-40 w-40 rounded-full" />
-                <h1>{profileData.display_name}</h1>
+                <h1 className="font-spotify font-black">{profileData.display_name}</h1>
             </div>
             </>
     )
