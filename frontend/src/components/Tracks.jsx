@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Loading from '../assets/Loading'
 import useAuth from "../hooks/useAuth";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
+
+
 export default function Tracks({authToken}) {
     // const accessToken = useSelector((state) => state.accessToken);
     const accessToken = useAuth(authToken);
-    console.log('Ran useAuth in Tracks. ACCESS TOKEN RECEIVED FROM HOOK: ', accessToken);
+    // console.log('Ran useAuth in Tracks. ACCESS TOKEN RECEIVED FROM HOOK: ', accessToken);
     const [topTracksData, setTopTracksData] = useState(null);
     const [activeButton, setActiveButton] = useState([1, 'long_term']);
     const navigate = useNavigate();
@@ -52,11 +56,15 @@ export default function Tracks({authToken}) {
 
                     {topTracksData.topTracks.items.map(track => {
                         return (
-                        <div key={track.external_ids.isrc} className="flex justify-between items-center pb-8">
+                        <div key={track.external_ids.isrc} className="flex justify-between items-center pb-8 group">
                             <div className="flex items-center">
-                                <img className="mr-5"src={track.album.images[2].url} alt="" />
+                                <div className="relative">
+                                <img className="" src={track.album.images[2].url} alt="" />
+                                <div className="opacity-0 bg-black w-full h-full absolute top-0 group-hover:opacity-50 transition-opacity duration-300 ease-in-out"></div>
+                            <FontAwesomeIcon className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" icon={faInfo} />
+                        </div>
 
-                                <div className="flex flex-col">
+                                <div className="flex flex-col ml-5">
                                     <h3 className="font-medium text-base">{track.name}</h3>
                                     <p className="font-normal text-gray-200-spotify text-sm">{(() => {
                                         const artistsName = track.artists.map(artist => artist.name);

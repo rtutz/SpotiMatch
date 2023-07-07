@@ -7,7 +7,7 @@ import logo from '../assets/logo.svg'
 import github from '../assets/github.svg'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faMicrophone, faMusic, faCompactDisc, faComment } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faMusic, faCompactDisc, faComment } from '@fortawesome/free-solid-svg-icons';
 
 import Cookies from 'universal-cookie'
 const cookie = new Cookies();
