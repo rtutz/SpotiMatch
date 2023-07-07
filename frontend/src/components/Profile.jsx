@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { getProfileData } from "../services/API/api";
-import { useSelector } from 'react-redux';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from '../assets/Loading';
 
 
-export default function Profile() { 
-    const code = new URLSearchParams(window.location.search).get('code');
-    const tempAccessToken = useSelector((state) => state.accessToken);
+export default function Profile({authToken}) { 
+    // const code = new URLSearchParams(window.location.search).get('code');
+    // const tempAccessToken = useSelector((state) => state.accessToken);
+    console.log('auth token in Profile component:', authToken);
 
-    useAuth(code);
+    const tempAccessToken = useAuth(authToken);
 
     const [profileData, setProfileData] = useState(null);
     const navigate = useNavigate();
@@ -36,7 +36,6 @@ export default function Profile() {
 
     
     if (profileData) {
-        console.log('PROFILE', profileData);
         return (
             <div className="container flex-col" id="container">
                 <div className="w-full flex justify-center items-center" id="header">

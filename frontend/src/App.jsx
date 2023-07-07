@@ -17,22 +17,9 @@ import { Route, Routes } from "react-router-dom"
 // const cookie = new Cookies();
 import LoginOrSignup from './components/LoginOrSignup';
 
-
-const code = new URLSearchParams(window.location.search).get('code');
-
 function App() {
-  // const user = useSelector((state) => state.user.user);
-  // const dbUser = cookie.get('auth-token');
-  // console.log('USER:', user);
-  // console.log('DB USER:', dbUser);
-  // console.log('CODE:', code);
-  // return (
-  //   <>
-  //   { }
-  //   {code ? <Dashboard code={code}/>:(!user ? <Signup/>: <SpotifyLink/>)}
-
-  //   </>
-  // )
+  const code = new URLSearchParams(window.location.search).get('code');
+  console.log('auth token in app (parent component) :', code);
 
   return (
     <Routes>
@@ -41,9 +28,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/link" element={<SpotifyLink />} />
       <Route path="/dashboard" element={<Dashboard  />}>
-        <Route path='profile' element={<Profile />}/>
+        <Route path='profile' element={<Profile authToken={code} />}/>
         <Route path='artists' element={<Artists/>}/>
-        <Route path='tracks' element={<Tracks/>}/>
+        <Route path='tracks' element={<Tracks authToken={code}/>}/>
         {/* <Route path='playlist' element={<Playlist/>}>
           <Route path=':id' element={<IndividualPlaylist />} />
 

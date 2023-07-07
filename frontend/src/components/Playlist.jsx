@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { getPlaylists } from "../services/API/api";
-import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import Loading from '../assets/Loading'
+import useAuth from "../hooks/useAuth";
 
-export default function Playlist() {
-    const accessToken = useSelector((state) => state.accessToken);
+export default function Playlist({ authToken }) {
+    const accessToken = useAuth(authToken);
     const [playlistsData, setPlaylistsData] = useState(null);
     const navigate = useNavigate();
 
