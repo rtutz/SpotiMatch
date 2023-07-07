@@ -11,6 +11,8 @@ import Artists from './components/Artists';
 import Playlist from './components/Playlist';
 import Tracks from './components/Tracks';
 import IndividualPlaylist from './components/IndividualPlaylist';
+import IndividualTrack from './components/IndividualTrack';
+import IndividualArtist from './components/IndividualArtist';
 
 // import Cookies from 'universal-cookie'
 import { Route, Routes } from "react-router-dom"
@@ -30,7 +32,10 @@ function App() {
       <Route path="/dashboard" element={<Dashboard  />}>
         <Route path='profile' element={<Profile authToken={code} />}/>
         <Route path='artists' element={<Artists/>}/>
-        <Route path='tracks' element={<Tracks authToken={code}/>}/>
+        <Route exact path='tracks' element={<Tracks authToken={code}/>}/>
+        <Route path='tracks/:id' element={<IndividualTrack />} />
+
+        <Route path='artists/:id' element={<IndividualArtist authToken={code} />} />
         {/* <Route path='playlist' element={<Playlist/>}>
           <Route path=':id' element={<IndividualPlaylist />} />
 

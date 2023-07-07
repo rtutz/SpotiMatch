@@ -16,6 +16,8 @@ export default function Profile({authToken}) {
     // console.log('auth token in Profile component:', authToken);
 
     const tempAccessToken = useAuth(authToken);
+    console.log('auth token in profile', authToken);
+    console.log('access token in profile', tempAccessToken);
 
     const [profileData, setProfileData] = useState(null);
     const navigate = useNavigate();
@@ -40,6 +42,7 @@ export default function Profile({authToken}) {
 
     
     if (profileData) {
+        console.log('profileData', profileData);
         return (
             <div className="container flex-col" id="container">
                 <div className="w-full flex justify-center items-center" id="header">
@@ -89,7 +92,7 @@ export default function Profile({authToken}) {
             
                         {profileData.topArtists.items.map(artist => {
                     return (
-                        <div key={artist.images[2].url} className="flex items-center pb-6 group" id="row item">
+                        <div key={artist.images[2].url} className="flex items-center pb-6 group" onClick={() => {navigate(`/dashboard/artists/${artist.id}`)}} id="row item">
                         <div className="relative">
                             <img className="w-14 rounded-full" src={artist.images[2].url} alt="" />
                             <div className="opacity-0 bg-black w-full h-full absolute top-0 rounded-full group-hover:opacity-50 transition-opacity duration-300 ease-in-out"></div>
@@ -122,7 +125,7 @@ export default function Profile({authToken}) {
 
                     {profileData.topTracks.items.map(track => {
                     return (
-                        <div key={track.name} className="flex items-center pb-6 group" id="row item">
+                        <div key={track.name} onClick={() => {navigate(`/dashboard/tracks/${track.id}`)}} className="flex items-center pb-6 group" id="row item">
                         <div className="relative">
                             <img className="w-14 rounded-full" src={track.album.images[2].url} alt="" />
                             <div className="opacity-0 bg-black w-full h-full absolute top-0 rounded-full group-hover:opacity-50 transition-opacity duration-300 ease-in-out"></div>
