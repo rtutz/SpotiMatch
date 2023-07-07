@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import axios from 'axios';
 import useAuth from "../hooks/useAuth";
 import { getProfileData } from "../services/API/api";
 import { useSelector } from 'react-redux';
