@@ -10,6 +10,7 @@ import Profile from './components/Profile';
 import Artists from './components/Artists';
 import Playlist from './components/Playlist';
 import Tracks from './components/Tracks';
+import IndividualPlaylist from './components/IndividualPlaylist';
 
 // import Cookies from 'universal-cookie'
 import { Route, Routes } from "react-router-dom"
@@ -43,7 +44,14 @@ function App() {
         <Route path='profile' element={<Profile />}/>
         <Route path='artists' element={<Artists/>}/>
         <Route path='tracks' element={<Tracks/>}/>
-        <Route path='playlist' element={<Playlist/>}/>
+        {/* <Route path='playlist' element={<Playlist/>}>
+          <Route path=':id' element={<IndividualPlaylist />} />
+
+        </Route> */}
+        <Route exact path='playlist' element={<Playlist/>} />
+        <Route path='playlist/:id' element={<IndividualPlaylist />} />
+         
+
         <Route path='all' element= {<AllChats />} >
           <Route path="chat/:receiverUID" element={<Chat />} />
         </Route>

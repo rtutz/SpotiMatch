@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getPlaylists } from "../services/API/api";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Loading from '../assets/Loading'
 
 export default function Playlist() {
@@ -39,9 +39,10 @@ export default function Playlist() {
                     </div>
                     )
                     })}
-
-
+            
+                <Outlet/>
                 </div>
+
             </div>
         )
 

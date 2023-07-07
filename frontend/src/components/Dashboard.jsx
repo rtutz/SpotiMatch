@@ -44,12 +44,12 @@ function Dashboard({ code }) {
                 </div>
                 </Link>
 
-                <Link to='/dashboard/artists'>
+                {/* <Link to='/dashboard/artists'>
                 <div className='text-center'>
                 <FontAwesomeIcon icon={faMicrophone} size='xl' className='text-gray-300'/>
                 <p>Top Artists</p>
                 </div>
-                </Link>
+                </Link> */}
 
                 <Link to='/dashboard/tracks'>
                 <div className='text-center'>
