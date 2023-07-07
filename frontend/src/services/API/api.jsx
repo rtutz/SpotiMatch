@@ -2,7 +2,6 @@ import axios from 'axios';
 
 
 export const getProfileData = async (accessToken) => {
-    console.log('accesstoken', accessToken);
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
     };
@@ -28,4 +27,23 @@ export const getProfileData = async (accessToken) => {
     } catch (e) {
         console.log('API ERROR', e)
     }
+};
+
+export const getTopTracks = async (accessToken, time_range) => {
+    const config = {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    };
+
+    try {
+        let fData = {};
+        const topTracks = await axios.get(`https://api.spotify.com/v1/me/top/tracks?time_range=${time_range}`, config);
+        fData.topTracks = topTracks.data;
+
+        return fData;
+    } catch (e) {
+        console.log('API ERROR', e)
+        return e;
+    }
+
+    
 }

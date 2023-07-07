@@ -20,30 +20,14 @@ export default function Profile() {
     useEffect(() => {
         if (!tempAccessToken) return;
         getProfileData(tempAccessToken).then(data => {
-            if (!data) throw new Error();
+            if (!data) throw new Error('Error in API request');
             setProfileData(data);
         }).catch(e => {
             console.error(e)
             localStorage.clear();
             navigate('/');
         })
-        // const fetchData = async () => {
-        //     if (!tempAccessToken) return;
-        //     try {
-        //         const profileName = await getProfileData(tempAccessToken);
-        //         const following = await getFollowing(tempAccessToken)
-        //         // WHY DO I HAVE THIS IF STATEMENT??????????????????????
-        //         // if (!profileName || !following) throw new Error();
-        //         setProfileData(profileName.data);
-        //         console.log(profileName.data);
-        //         console.log(following);
-        //     } catch (e) {
-        //         console.error(e);
-        //         localStorage.clear();
-        //         return <Navigate to='/'/>
-        //     }
-        // }
-        // fetchData();
+
     }, [tempAccessToken]);
 
     const handleLogout = () => {
@@ -89,7 +73,7 @@ export default function Profile() {
                 </div>
 
                 <div className="flex w-full my-10" id='columns'>
-                    <div className="w-1/2 pr-4 flex flex-col">
+                    <div className="w-1/2 pr-8 flex flex-col">
                         <div className="flex justify-between items-center py-6">
                             <h1 className="text-xl">Top Artists of All Time</h1>
 
@@ -108,7 +92,7 @@ export default function Profile() {
                     })}
                         
                     </div>
-                    <div className="w-1/2 pl-4 flex flex-col">
+                    <div className="w-1/2 pl-8 flex flex-col">
                         <div className="flex justify-between items-center py-6">
                             <h1 className="text-xl">Top Tracks of All Time</h1>
 

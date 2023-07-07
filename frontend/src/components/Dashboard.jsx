@@ -32,7 +32,8 @@ function Dashboard({ code }) {
 
     return (
         <div className='flex'>
-        <div className='bg-gray-900-spotify h-screen w-28 sticky top-0'>
+        <div className='min-h-screen w-28'></div>
+        <div className='bg-gray-900-spotify h-screen w-28 fixed'>
             <img src={logo} alt="" />
             
             <div>
