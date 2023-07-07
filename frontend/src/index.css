@@ -35,7 +35,7 @@
 }
 
 .container {
-  @apply w-full p-20
+  @apply w-full px-20 pt-20 pb-0
 }
 
 .btn {

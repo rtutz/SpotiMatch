@@ -44,6 +44,20 @@ export const getTopTracks = async (accessToken, time_range) => {
         console.log('API ERROR', e)
         return e;
     }
+};
 
-    
+export const getPlaylists = async (accessToken) => {
+    const config = {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    };
+    try {
+        let fData = {};
+        const playlists = await axios.get(`https://api.spotify.com/v1/me/playlists`, config);
+        fData.playlists = playlists.data;
+
+        return fData;
+    } catch (e) {
+        console.error('API ERROR:', e)
+        return e;
+    }
 }
