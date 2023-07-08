@@ -16,7 +16,7 @@ export const getProfileData = async (accessToken) => {
         const topArtists = await axios.get('https://api.spotify.com/v1/me/top/artists?limit=10', config);
         fData.topArtists = topArtists.data;
 
-        const topTracks = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=10', config);
+        const topTracks = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50', config);
         fData.topTracks = topTracks.data;
 
         const playlists = await axios.get('https://api.spotify.com/v1/me/playlists', config);

@@ -4,6 +4,8 @@ import { getProfileData } from "../services/API/api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from '../assets/Loading';
+import {auth} from '../services/firebase/config'
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,9 +13,6 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Profile({authToken}) { 
-    // const code = new URLSearchParams(window.location.search).get('code');
-    // const tempAccessToken = useSelector((state) => state.accessToken);
-    // console.log('auth token in Profile component:', authToken);
 
     const tempAccessToken = useAuth(authToken);
 
@@ -24,13 +23,29 @@ export default function Profile({authToken}) {
     useEffect(() => {
         if (!tempAccessToken) return;
         getProfileData(tempAccessToken).then(data => {
-            if (!data) throw new Error(data.body);
+            console.log(data);
+            if (!data) return;
             setProfileData(data);
+
+            // set data on database
+            const uid = auth.currentUser.uid;
+            const db = getFirestore();
+            const docRef = doc(db, "users", uid);
+            updateDoc(docRef, {
+                spotify: {
+                    currUserProfile: data.currUserProfile,
+                    topTracks: data.topTracks
+                }
+            })
+            
+
         }).catch(e => {
             console.error(e)
             localStorage.clear();
             navigate('/');
-        })
+        });
+
+
 
     }, [tempAccessToken, navigate]);
 
@@ -121,7 +136,7 @@ export default function Profile({authToken}) {
                             )
                             })} */}
 
-                    {profileData.topTracks.items.map(track => {
+                    {profileData.topTracks.items.slice(0, 10).map(track => {
                     return (
                         <div key={track.name} onClick={() => {navigate(`/dashboard/tracks/${track.id}`)}} className="flex items-center pb-6 group" id="row item">
                         <div className="relative">
