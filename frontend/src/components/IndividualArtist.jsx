@@ -28,7 +28,7 @@ export default function IndividualArtist({authToken}) {
 
                 <h1 className="font-black text-6xl my-8">{artistData.individualArtist.name}</h1>
 
-                <div className="flex justify-between items-center" style={{width: '170%'}}> 
+                <div className="flex justify-evenly items-center" style={{width: '170%'}}> 
                     <div className="flex flex-col items-center justify-center">
                         <h3 className="text-spotify-green font-bold text-xl">{(() => artistData.individualArtist.followers.total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","))()}</h3>
                         <p className="text-gray-200-spotify text-xs tracking-wider">FOLLOWERS</p>

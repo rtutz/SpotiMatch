@@ -171,6 +171,62 @@ function Chat() {
 
   if (receiverData && messages && allUsers) {
   return (
+
+      <div className="flex flex-col mb-10 h-full justify-between" id="entire chat">
+        <div>
+          <div id="headerNameAndPic" className="flex items-center m-5" >
+            <img className="w-10 h-10 rounded-full" src={receiverData.spotify.currUserProfile.images[0].url} alt="" />
+            <h1 className="ml-4 font-black tracking-wide">{receiverData.spotify.currUserProfile.display_name}</h1>
+          </div>
+  
+  
+          {/* FORR MESSAGESSSS */}
+          {messages.map((message) => {
+          const content = message.content;
+          const senderUID = message.senderUID;
+          let senderProfileName = null; // Initialize the variable
+          let senderProfilePic;
+  
+          allUsers.forEach((item) => {
+            if (item.uid === senderUID) {
+              senderProfilePic = item.spotify.currUserProfile.images[0].url;
+              senderProfileName = item.spotify.currUserProfile.display_name;
+            }
+          });
+  
+          return (
+            <div key={message.id} className="flex items-center m-5">
+              <img className="w-16 h-16 rounded-full" src={senderProfilePic} alt="" />
+              
+                <div className="ml-5 flex flex-col">
+                  <div className="flex items-center">
+                    <h1 className="font-bold text-spotify-green">{senderProfileName}</h1>
+                    <p className="ml-4 text-xs text-gray-200-spotify">{formatRelativeTime(message.date)}</p>
+                  </div>
+                  <p className="font-normal">{content}</p>
+                  
+                </div>
+            </div>
+          );
+        })}
+        </div>
+    <div className="sticky bottom-10 w-full" id="input chat">
+      <form onSubmit={handleMessageSubmit} className="w-11/12 mx-auto">
+        <input type="text" className="placeholder-gray-600-spotify w-full bg-gray-500-spotify p-5 rounded-full" placeholder="Type your message here..." name="currentMessage" />
+      </form>
+    </div>
+      </div>
+  )
+  } else {
+    return (
+      <Loading />
+    )
+  }
+}
+
+export default Chat;
+
+
       // <>
       // <h1>Individual Chat</h1>
       // {messages.map((message) => (
@@ -184,57 +240,3 @@ function Chat() {
       //     <button type="submit">Send</button>
       // </form>
       // </>
-      <div className="flex flex-col mb-10" id="entire chat">
-        <div id="headerNameAndPic" className="flex items-center m-5" >
-          <img className="w-10 h-10 rounded-full" src={receiverData.spotify.currUserProfile.images[0].url} alt="" />
-          <h1 className="ml-4 font-black tracking-wide">{receiverData.spotify.currUserProfile.display_name}</h1>
-        </div>
-
-
-        {/* FORR MESSAGESSSS */}
-        {messages.map((message) => {
-        const content = message.content;
-        const senderUID = message.senderUID;
-        let senderProfileName = null; // Initialize the variable
-        let senderProfilePic;
-
-        allUsers.forEach((item) => {
-          if (item.uid === senderUID) {
-            senderProfilePic = item.spotify.currUserProfile.images[0].url;
-            senderProfileName = item.spotify.currUserProfile.display_name;
-          }
-        });
-
-        return (
-          <div key={message.id} className="flex items-center m-5">
-            <img className="w-16 h-16 rounded-full" src={senderProfilePic} alt="" />
-            
-              <div className="ml-5 flex flex-col">
-                <div className="flex items-center">
-                  <h1 className="font-bold text-spotify-green">{senderProfileName}</h1>
-                  <p className="ml-4 text-xs text-gray-200-spotify">{formatRelativeTime(message.date)}</p>
-                </div>
-                <p className="font-normal">{content}</p>
-                
-              </div>
-          </div>
-        );
-      })}
-    <div className="sticky bottom-10 w-full">
-      <form onSubmit={handleMessageSubmit} className="w-11/12 mx-auto">
-        <input type="text" className="placeholder-gray-600-spotify w-full bg-gray-500-spotify p-5 rounded-full" placeholder="Type your message here..." name="currentMessage" />
-      </form>
-    </div>
-      {/* <div className="sticky bottom-10">
-      <input type=" top-0" />
-      </div> */}
-      </div>
-  )
-  } else {
-    return (
-      <Loading />
-    )
-  }
-}
-
-export default Chat;

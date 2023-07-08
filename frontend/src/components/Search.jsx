@@ -44,19 +44,6 @@ export default function Search() {
 
     // Do a slice when passing people to DisplayPeople
     return (
-        // <div>
-        //     <h2>Search</h2>
-        //     <form>
-        //         <input type="text" onChange={(e)=>{setQueryName(e.target.value)}} 
-        //             onFocus={handleFocus}
-        //             onBlur={handleBlur}/>
-        //             <button type="submit">Search</button>
-        //     </form>
-        //     {isActive && <DisplayPeople people={curr}/>}
-        // </div>
-
-
-        // <div className="ml-auto m-6">
             <div className="absolute right-6 top-6">
             <form className="relative">
                 <input className="w-80 px-6 py-3 rounded-full text-sm bg-gray-500-spotify placeholder-gray-600-spotify" type="text" 

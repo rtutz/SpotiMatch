@@ -68,7 +68,7 @@ function AllChats() {
         <div className="h-screen border-r-2 border-gray-200-spotify w-40 sticky top-0">
 
         </div>
-        <div className="flex flex-col w-full relative">
+        <div className="flex flex-col w-full">
             <Search/>
             <Outlet/>
         </div>
