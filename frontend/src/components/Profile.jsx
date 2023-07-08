@@ -16,8 +16,7 @@ export default function Profile({authToken}) {
     // console.log('auth token in Profile component:', authToken);
 
     const tempAccessToken = useAuth(authToken);
-    console.log('auth token in profile', authToken);
-    console.log('access token in profile', tempAccessToken);
+
 
     const [profileData, setProfileData] = useState(null);
     const navigate = useNavigate();
@@ -25,7 +24,7 @@ export default function Profile({authToken}) {
     useEffect(() => {
         if (!tempAccessToken) return;
         getProfileData(tempAccessToken).then(data => {
-            if (!data) throw new Error('Error in API request');
+            if (!data) throw new Error(data.body);
             setProfileData(data);
         }).catch(e => {
             console.error(e)
@@ -42,7 +41,6 @@ export default function Profile({authToken}) {
 
     
     if (profileData) {
-        console.log('profileData', profileData);
         return (
             <div className="container flex-col" id="container">
                 <div className="w-full flex justify-center items-center" id="header">

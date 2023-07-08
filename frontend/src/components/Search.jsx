@@ -32,7 +32,7 @@ export default function Search() {
         }, 100);
       };
 
-      const curr = people.filter(person => person.email.includes(queryName));
+      const curr = people.filter(person => person.username.includes(queryName));
 
     console.log('Current people:', curr);
     // Do a slice when passing people to DisplayPeople

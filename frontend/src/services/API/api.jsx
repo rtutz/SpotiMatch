@@ -77,3 +77,19 @@ export const getIndividualArtist = async (accessToken, artistId) => {
         return e;
     }   
 }
+
+export const getIndividualTrack = async (accessToken, artistId) => {
+    const config = {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    };
+    try {
+        let fData = {};
+        const individualArtist = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, config);
+        fData.individualArtist = individualArtist.data;
+
+        return fData;
+    } catch (e) {
+        console.error('API ERROR:', e)
+        return e;
+    }   
+}

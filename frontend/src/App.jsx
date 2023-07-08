@@ -1,5 +1,3 @@
-import './App.css'
-
 import SpotifyLink from './components/SpotifyLink';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';

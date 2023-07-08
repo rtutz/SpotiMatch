@@ -5,9 +5,13 @@ import { getFirestore,
     query, 
     onSnapshot} from "firebase/firestore";
 import { auth } from '../services/firebase/config'
-import { Link } from "react-router-dom";
-
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 import Search from "./Search";
+
+// import { Link } from "react-router-dom";
+
+// import Search from "./Search";
 
 // This component renders all the chats we've done before. This is necessary
 // since it supplies the chatID (i.e. what chat is currently open) to Chat.jsx
@@ -16,7 +20,8 @@ import Search from "./Search";
 function AllChats() {
     const [pplWithConvo, setPplWithConvo] = useState([]);
 
-    const user = auth.currentUser;
+    const user = cookies.get('auth-token');
+
     // const user = {uid: '8738wVe5QwaYOCNWDbj96J2xPxs1'}
 
     useEffect(() => {
@@ -43,23 +48,31 @@ function AllChats() {
 
     }, [])
 
-
+    console.log('PPL LIST:', pplWithConvo);
     return (
-        <div>
-            <h1>All Chats</h1>
-            <Search />
-            <h3>Past converstations</h3>
-                <ul>   
-                {pplWithConvo.map((chat) => (
-                <li key={chat.receiverUID}>
-                    <Link to={`/dashboard/all/chat/${chat.receiverUID}`}>
-                    {chat.receiverUID}
-                    </Link>
-                </li>
-                ))}
-                </ul>
-      <Outlet />
+    //     <div>
+    //         <h1>All Chats</h1>
+    //         <Search />
+    //         <h3>Past converstations</h3>
+    //             <ul>   
+    //             {pplWithConvo.map((chat) => (
+    //             <li key={chat.receiverUID}>
+    //                 <Link to={`/dashboard/all/chat/${chat.receiverUID}`}>
+    //                 {chat.receiverUID}
+    //                 </Link>
+    //             </li>
+    //             ))}
+    //             </ul>
+    //   <Outlet />
+    //     </div>
+
+    <div className="flex">
+        <div className="h-screen border-r-2 border-gray-200-spotify w-20 sticky top-0">
+
         </div>
+        <Search/>
+        <Outlet/>
+    </div>
     )
 }
 

@@ -46,7 +46,6 @@ function Chat() {
           snapshot.forEach((doc) => {
               messagesList.push({ ...doc.data() });
           });
-          console.log(messagesList);
           setMessages(messagesList);
         });
   
@@ -73,6 +72,7 @@ function Chat() {
 
   return (
       <>
+      <h1>Individual Chat</h1>
       {messages.map((message) => (
         <div key={message.id} className="message">
           <span className="user">{}:</span> {message.content}
