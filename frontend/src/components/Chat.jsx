@@ -69,7 +69,8 @@ function formatRelativeTime(timestamp) {
 
 function Chat() {
   // Change state.users.users to state.users
-  const allUsers = useSelector(state => state.users.users);
+  // const allUsers = useSelector(state => state.users.users);
+  const [allUsers, setAllUsers] = useState(null);
   const [messages, setMessages] = useState(null);
   const [receiverData, setReceiverData] = useState(null);
 
@@ -85,20 +86,24 @@ function Chat() {
     if (!receiverUID && !allUsers) return;
     const fetchUserInfo = async () => {
       try {
-        allUsers.forEach(userState => {
-          if (userState.uid === receiverUID) {
-            console.log(userState);
-            setReceiverData(userState);}
-        })
+        // allUsers.forEach(userState => {
+        //   if (userState.uid === receiverUID) {
+        //     console.log(userState);
+        //     setReceiverData(userState);}
+        // })
         // EITHER PULL DATA FROM DATABASE ORRR JUST USE STATE TO GET DATA
         
-        // const colRef = collection(db, 'users');
-        // const u = query(colRef, where('uid', "==", receiverUID));
-        // const queryUsers = await getDocs(u);
-        // queryUsers.forEach(doc => {
-        //   console.log('data from db', doc.data());
-        //   setReceiverData(doc.data())
-        // })
+        const colRef = collection(db, 'users');
+        const u = query(colRef);
+        const queryUsers = await getDocs(u);
+
+        const tempAllUsers = [];
+        queryUsers.forEach(doc => {
+          tempAllUsers.push(doc.data());
+          if (doc.data().uid === receiverUID) setReceiverData(doc.data());
+        });
+
+        setAllUsers(tempAllUsers);
 
       } catch (e) {
         console.error(e);
