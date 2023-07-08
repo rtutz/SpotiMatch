@@ -4,6 +4,9 @@ import { getFirestore, collection, query, onSnapshot} from "firebase/firestore";
 import {setUsers} from '../features/userSlice';
 import {useDispatch} from 'react-redux';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 export default function Search() {
     const [isActive, setIsActive] = useState(false);
     const [people, setPeople] = useState([]);
@@ -33,7 +36,7 @@ export default function Search() {
       const handleBlur = () => {
         setTimeout(() => {
             setIsActive(false);
-        }, 500);
+        }, 150);
       };
 
       const notUser = people.filter(person => person.uid !== user.uid);
@@ -51,14 +54,19 @@ export default function Search() {
         //     </form>
         //     {isActive && <DisplayPeople people={curr}/>}
         // </div>
-        <div>
-            <form>
-                <input className="w-80 " type="text" 
+
+
+        // <div className="ml-auto m-6">
+            <div className="absolute right-6 top-6">
+            <form className="relative">
+                <input className="w-80 px-6 py-3 rounded-full text-sm bg-gray-500-spotify placeholder-gray-600-spotify" type="text" 
                     onChange={(e)=>{setQueryName(e.target.value)}} 
                     onFocus={handleFocus}
                     onBlur={handleBlur}
-                    placeholder="Who do you want to talk to?"/>
+                    placeholder="      Who do you want to talk to?"/>
+                    <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute top-3 left-4" style={{color: "#6D7575",}}/>
             </form>
+            {isActive && <DisplayPeople people={curr}/>}
         </div>
        
         

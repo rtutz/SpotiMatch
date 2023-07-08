@@ -10,6 +10,8 @@ export default {
         'spotify-green': '#1ed760',
         'spotify-white': '#FFFFFF',
         'gray-900-spotify': '#040306',
+        'gray-600-spotify': '#6D7575',
+        'gray-500-spotify': '#242424',
         'gray-400-spotify': '#181818',
         'gray-200-spotify': '#9B9B9B'
       }

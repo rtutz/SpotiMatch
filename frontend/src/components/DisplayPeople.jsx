@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 export default function DisplayPeople({people}) {
-    console.log('IN DISPLAY PEOPLE:', people);
     return (
         <div>
             <h1>People</h1>

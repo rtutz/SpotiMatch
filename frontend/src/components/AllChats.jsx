@@ -64,12 +64,14 @@ function AllChats() {
     //   <Outlet />
     //     </div>
 
-    <div className="flex">
-        <div className="h-screen border-r-2 border-gray-200-spotify w-20 sticky top-0">
+    <div className="flex w-full">
+        <div className="h-screen border-r-2 border-gray-200-spotify w-40 sticky top-0">
 
         </div>
-        <Search/>
-        <Outlet/>
+        <div className="flex flex-col w-full relative">
+            <Search/>
+            <Outlet/>
+        </div>
     </div>
     )
 }
