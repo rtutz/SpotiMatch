@@ -60,7 +60,7 @@ function useAuth(code){
         if (storedAccessToken && storedRefreshToken && storedExpiresIn) return
         axios.post('http://localhost:3000/login/auth', {code})
             .then((res) => {
-                if (res.data.statusCode === 400) throw console.error(res.data.body);
+                if (res.data.statusCode === 400) {console.error(res.data.body); throw new Error()}
                 setAccessTokenState(res.data.access_token);
                 setRefreshToken(res.data.refresh_token);
                 setExpiresIn(res.data.expires_in);

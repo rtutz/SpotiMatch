@@ -2,6 +2,7 @@ import axios from 'axios';
 
 
 export const getProfileData = async (accessToken) => {
+    console.log('in api file. this is accestoken', accessToken);
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
     };

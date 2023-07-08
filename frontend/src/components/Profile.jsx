@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from '../assets/Loading';
 import {auth} from '../services/firebase/config'
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
-
+import Cookies from 'universal-cookie';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 export default function Profile({authToken}) { 
 
     const tempAccessToken = useAuth(authToken);
+    console.log('access token', tempAccessToken);
 
 
     const [profileData, setProfileData] = useState(null);
@@ -23,7 +24,7 @@ export default function Profile({authToken}) {
     useEffect(() => {
         if (!tempAccessToken) return;
         getProfileData(tempAccessToken).then(data => {
-            console.log(data);
+            console.log('data received', data);
             if (!data) return;
             setProfileData(data);
 
@@ -51,6 +52,8 @@ export default function Profile({authToken}) {
 
     const handleLogout = () => {
         localStorage.clear();
+        const cookies = new Cookies();
+        cookies.remove('auth-token'); 
         navigate('/');
     }
 

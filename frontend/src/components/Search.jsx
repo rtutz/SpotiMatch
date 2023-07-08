@@ -36,7 +36,7 @@ export default function Search() {
       const handleBlur = () => {
         setTimeout(() => {
             setIsActive(false);
-        }, 150);
+        }, 300);
       };
 
       const notUser = people.filter(person => person.uid !== user.uid);

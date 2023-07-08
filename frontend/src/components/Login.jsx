@@ -17,12 +17,14 @@ function Login() {
 
         signInWithEmailAndPassword(auth, email, password)
         .then(userCredentials => {
+            localStorage.clear();
             const {uid, email, refreshToken} = userCredentials.user;
             // dispatch(setUser({uid, email}))
 
 
             // Set cookie so when reload occurs, user is still logged in
             const cookies = new Cookies();
+            cookies.set('auth-token', refreshToken); 
             console.log('uid in login', uid);
             localStorage.setItem('curr-user', JSON.stringify({uid, email, refreshToken}))
             // cookies.remove('auth-token');
