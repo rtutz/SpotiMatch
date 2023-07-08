@@ -30,8 +30,8 @@ function Dashboard({ code }) {
 
     dispatch(setAccessToken(accessToken));
 
-    return (
-        <div className='flex'>
+    return (    
+        <div className='flex flex-1'>
         <div className='min-h-screen w-28'></div>
         <div className='bg-gray-900-spotify h-screen w-28 fixed'>
             <img src={logo} alt="" />

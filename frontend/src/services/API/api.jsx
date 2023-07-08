@@ -26,7 +26,7 @@ export const getProfileData = async (accessToken) => {
         return fData
         
     } catch (e) {
-        console.log('API ERROR', e)
+        console.log('API ERROR (error in api.jsx)', e)
     }
 };
 
@@ -42,8 +42,7 @@ export const getTopTracks = async (accessToken, time_range) => {
 
         return fData;
     } catch (e) {
-        console.log('API ERROR', e)
-        return e;
+        console.log('API ERROR (error in api.jsx)', e)
     }
 };
 
@@ -58,8 +57,8 @@ export const getPlaylists = async (accessToken) => {
 
         return fData;
     } catch (e) {
-        console.error('API ERROR:', e)
-        return e;
+        console.log('API ERROR (error in api.jsx)', e)
+
     }
 };
 
@@ -74,8 +73,8 @@ export const getIndividualArtist = async (accessToken, artistId) => {
 
         return fData;
     } catch (e) {
-        console.error('API ERROR:', e)
-        return e;
+        console.log('API ERROR (error in api.jsx)', e)
+
     }   
 }
 
@@ -90,7 +89,7 @@ export const getIndividualTrack = async (accessToken, artistId) => {
 
         return fData;
     } catch (e) {
-        console.error('API ERROR:', e)
-        return e;
+        console.log('API ERROR (error in api.jsx)', e)
+
     }   
 }
