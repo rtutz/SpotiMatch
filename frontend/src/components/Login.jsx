@@ -1,7 +1,7 @@
 import { auth } from '../services/firebase/config'
 import { signInWithEmailAndPassword  } from 'firebase/auth';
 import {useDispatch} from'react-redux';
-import { setUser } from '../features/userSlice';
+// import { setUser } from '../features/userSlice';
 import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,12 +18,15 @@ function Login() {
         signInWithEmailAndPassword(auth, email, password)
         .then(userCredentials => {
             const {uid, email, refreshToken} = userCredentials.user;
-            dispatch(setUser({uid, email}))
+            // dispatch(setUser({uid, email}))
 
 
             // Set cookie so when reload occurs, user is still logged in
             const cookies = new Cookies();
-            cookies.set('auth-token', JSON.stringify({uid, email, refreshToken})); 
+            console.log('uid in login', uid);
+            localStorage.setItem('curr-user', JSON.stringify({uid, email, refreshToken}))
+            // cookies.remove('auth-token');
+            // cookies.set('auth-token', JSON.stringify({uid, email, refreshToken})); 
             navigate('/link');
         }
     ).catch(error => {

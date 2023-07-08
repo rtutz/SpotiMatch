@@ -1,7 +1,7 @@
 import { auth } from '../services/firebase/config'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import {useDispatch} from'react-redux';
-import { setUser } from '../features/userSlice';
+// import { setUser } from '../features/userSlice';
 import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, setDoc, doc } from "firebase/firestore";
@@ -24,7 +24,7 @@ function Signup() {
             updateProfile(userCredentials.user,  { displayName: username }).then(() => {console.log('display name added successfully')})
             
             const {uid, email, refreshToken} = userCredentials.user;
-            dispatch(setUser({uid, email}))
+            // dispatch(setUser({uid, email}))
 
             // Set cookie so when reload occurs, user is still logged in
             const cookies = new Cookies();

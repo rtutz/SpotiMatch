@@ -47,8 +47,6 @@ function AllChats() {
         });
 
     }, [])
-
-    console.log('PPL LIST:', pplWithConvo);
     return (
     //     <div>
     //         <h1>All Chats</h1>

@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import DisplayPeople from "./DisplayPeople";
 import { getFirestore, collection, query, onSnapshot} from "firebase/firestore";
+import {setUsers} from '../features/userSlice';
+import {useDispatch} from 'react-redux';
 
 export default function Search() {
     const [isActive, setIsActive] = useState(false);
     const [people, setPeople] = useState([]);
     const [queryName, setQueryName] = useState("");
+    const user = JSON.parse(localStorage.getItem('curr-user'));
 
-    console.log(people);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const db = getFirestore();
@@ -19,6 +22,7 @@ export default function Search() {
                 tempPeople.push({...doc.data(), id: doc.id});
             });
             setPeople(tempPeople);
+            dispatch(setUsers(tempPeople));
         })
     }, []);
 
@@ -29,24 +33,34 @@ export default function Search() {
       const handleBlur = () => {
         setTimeout(() => {
             setIsActive(false);
-        }, 100);
+        }, 500);
       };
 
-      const curr = people.filter(person => person.username.includes(queryName));
+      const notUser = people.filter(person => person.uid !== user.uid);
+      const curr = notUser.filter(person => person.username.includes(queryName));
 
-    console.log('Current people:', curr);
     // Do a slice when passing people to DisplayPeople
     return (
+        // <div>
+        //     <h2>Search</h2>
+        //     <form>
+        //         <input type="text" onChange={(e)=>{setQueryName(e.target.value)}} 
+        //             onFocus={handleFocus}
+        //             onBlur={handleBlur}/>
+        //             <button type="submit">Search</button>
+        //     </form>
+        //     {isActive && <DisplayPeople people={curr}/>}
+        // </div>
         <div>
-            <h2>Search</h2>
             <form>
-                <input type="text" onChange={(e)=>{setQueryName(e.target.value)}} 
+                <input className="w-80 " type="text" 
+                    onChange={(e)=>{setQueryName(e.target.value)}} 
                     onFocus={handleFocus}
-                    onBlur={handleBlur}/>
-                    <button type="submit">Search</button>
+                    onBlur={handleBlur}
+                    placeholder="Who do you want to talk to?"/>
             </form>
-            {isActive && <DisplayPeople people={curr}/>}
         </div>
+       
         
     )
 }
