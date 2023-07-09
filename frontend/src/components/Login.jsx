@@ -11,6 +11,8 @@ function Login() {
     const navigate = useNavigate();
     const submitLogin = (e) => {
         e.preventDefault();
+        const cookies = new Cookies();
+        cookies.remove('auth-token');
 
         const email = e.target.email.value;
         const password = e.target.password.value;
@@ -23,7 +25,6 @@ function Login() {
 
 
             // Set cookie so when reload occurs, user is still logged in
-            const cookies = new Cookies();
             cookies.set('auth-token', refreshToken); 
             console.log('uid in login', uid);
             localStorage.setItem('curr-user', JSON.stringify({uid, email, refreshToken}))

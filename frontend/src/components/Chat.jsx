@@ -9,7 +9,8 @@ import {
     where,
     getDocs,
    getDoc,
-   serverTimestamp} from "firebase/firestore";
+   serverTimestamp, 
+  orderBy} from "firebase/firestore";
 import Cookies from "universal-cookie";
 import { useParams } from 'react-router-dom';
 import {auth} from '../services/firebase/config';
@@ -73,6 +74,7 @@ function Chat() {
   const [allUsers, setAllUsers] = useState(null);
   const [messages, setMessages] = useState(null);
   const [receiverData, setReceiverData] = useState(null);
+  const [messageAdded, setMessageAdded] = useState(false);
 
   const user = JSON.parse(localStorage.getItem('curr-user'));
   // console.log('user id in ayth', auth.currentUser.uid);
@@ -133,7 +135,7 @@ function Chat() {
       // console.log('roomId exists. chatted before');
       const chatRoomRef =  doc(collection(db, 'chatRooms'), roomId);
       const messagesCollectionRef = collection(chatRoomRef, 'messages');
-      const queryMessages = query(messagesCollectionRef);
+      const queryMessages = query(messagesCollectionRef, orderBy("date"));
       onSnapshot(queryMessages, (snapshot) => {
           let messagesList = [];
           snapshot.forEach((doc) => {
@@ -146,11 +148,12 @@ function Chat() {
 
     fetchData()
   
-  }, [db, roomId, receiverUID])
+  }, [db, roomId, receiverUID, messageAdded])
 
 
   // Handles the submit functionality.
   const handleMessageSubmit = async (e) => {
+      setMessageAdded(!messageAdded);
       e.preventDefault();
       const now = new Date();
       

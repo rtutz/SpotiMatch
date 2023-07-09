@@ -13,8 +13,6 @@ app.use(express.json());
 app.get('/login/link', (req, res) => { 
     const scope = 'user-read-private user-read-email user-top-read user-follow-read playlist-read-private';
 
-    console.log('in backend login link');
-
     res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',

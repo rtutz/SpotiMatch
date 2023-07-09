@@ -26,7 +26,8 @@ export const getProfileData = async (accessToken) => {
         return fData
         
     } catch (e) {
-        console.log('API ERROR (error in api.jsx)', e)
+        console.log('API ERROR (error in api.jsx)');
+        console.error(e);
     }
 };
 
