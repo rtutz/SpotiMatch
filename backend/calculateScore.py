@@ -1,13 +1,28 @@
 # import json
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-import sys 
+import sys
 import json
-import ast 
+import ast
 
 
 def calculate_similarity_score(playlist1, playlist2):
     # Extract the song features from the JSON responses
+    for song in playlist1:
+        song.pop("type")
+        song.pop("id")
+        song.pop("uri")
+        song.pop("track_href")
+        song.pop("analysis_url")
+
+    for song in playlist2:
+        song.pop("type")
+        song.pop("id")
+        song.pop("uri")
+        song.pop("track_href")
+        song.pop("analysis_url")
+
+
     features1 = [list(song.values()) for song in playlist1]
     features2 = [list(song.values()) for song in playlist2]
 
@@ -23,69 +38,61 @@ def calculate_similarity_score(playlist1, playlist2):
 
     return compatibility_score
 
+
+def get_index_for_key(key):
+    key_mapping = {
+        'acousticness': 0,
+        'danceability': 1,
+        'duration_ms': 2,
+        'energy': 3,
+        'instrumentalness': 4,
+        'key': 5,
+        'liveness': 6,
+        'loudness': 7,
+        'mode': 8,
+        'speechiness': 9,
+        'tempo': 10,
+        'time_signature': 11,
+        'valence': 12
+    }
+
+    return key_mapping.get(key)
+
+
 def normalize_features(features):
+    feature_ranges = {
+        'acousticness': (0, 1),
+        'danceability': (0, 1),
+        'duration_ms': (0, 600000),
+        'energy': (0, 1),
+        'instrumentalness': (0, 1),
+        'key': (-1, 11),
+        'liveness': (0, 1),
+        'loudness': (-60, 0),
+        'mode': (0, 1),
+        'speechiness': (0, 1),
+        'tempo': (50, 150),
+        'time_signature': (3, 7),
+        'valence': (0, 1)
+    }
+
     # Transpose the feature matrix to work with columns
     features = np.array(features).T.tolist()
 
     # Normalize each feature to a [0, 1] range
-    for i in range(len(features)):
-        # feature_min = min(features[i])
-        # feature_max = max(features[i])
-        if (i == 0):
-            # acousticness
-            feature_min = 0
-            feature_max = 1
-        elif (i == 1):
-            # danceability
-            feature_min = 0
-            feature_max = 1
-        elif (i == 2):
-            # duration_ms
-            feature_min = 0 # Online says 200000 and 300000
-            feature_max = 600000 #10 minutes
-        elif (i == 3):
-            # energy
-            feature_min = 0
-            feature_max = 1
-        elif (i == 4):
-            # instrumentalness
-            feature_min = 0
-            feature_max = 1
-        elif (i == 5):
-            # key
-            feature_min = -1
-            feature_max = 11
-        elif (i == 6):
-            # liveness
-            feature_min = 0
-            feature_max = 1
-        elif (i == 7):
-            # loudness
-            feature_min = -60
-            feature_max = 0
-        elif (i == 8):
-            # mode
-            feature_min = 0
-            feature_max = 1
-        elif (i == 9):
-            # speechiness
-            feature_min = 0
-            feature_max = 1
-        elif (i == 10):
-            # tempo
-            feature_min = 50
-            feature_max = 150
-        elif (i == 11):
-            # time_signature
-            feature_min = 3
-            feature_max = 7
-        elif (i == 12):
-            # valence
-            feature_min = 0
-            feature_max = 1
+    for key, values in feature_ranges.items():
+        feature_min, feature_max = values
 
+        index = get_index_for_key(key)
+        if index is None:
+            continue
 
-        features[i] = [(value - feature_min) / (feature_max - feature_min) for value in features[i]]
+        normalized_features = []
+        for value in features[index]:
+            normalized_value = (float(value) - feature_min) / (feature_max - feature_min)
+            normalized_features.append(normalized_value)
+
+        features[index] = normalized_features
 
     # Transpose the features back to the original shape
     features = np.array(features).T.tolist()
@@ -93,9 +100,26 @@ def normalize_features(features):
     return features
 
 
-input = ast.literal_eval(sys.argv[1])
-playlist1 = input[0]
-playlist2 = input[1]
-compatability_score = calculate_similarity_score(playlist1, playlist2)
-print(json.dumps(compatability_score))
-sys.stdout.flush()
+
+
+def read_in():
+    lines = sys.stdin.readlines()
+    # Since our input would only be having one line, parse our JSON data from that
+    return json.loads(lines[0])
+
+
+def main():
+    # UNCOMMENT IF FUNCTION WORKS
+    # get our data as an array from read_in()
+    lines = read_in()
+
+    playlist1 = lines[0]
+    playlist2 = lines[1]
+
+    compatability_score = calculate_similarity_score(playlist1, playlist2)
+
+    print(json.dumps(compatability_score))
+
+
+if __name__ == '__main__':
+    main()

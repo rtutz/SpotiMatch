@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
     getFirestore, 
     collection, 
@@ -6,16 +6,13 @@ import {
     setDoc, 
     query, 
     onSnapshot,
-    where,
     getDocs,
    getDoc,
-   serverTimestamp, 
   orderBy} from "firebase/firestore";
-import Cookies from "universal-cookie";
 import { useParams } from 'react-router-dom';
-import {auth} from '../services/firebase/config';
 import Loading from '../assets/Loading';
-import {useSelector} from 'react-redux';
+import {calculateCompatability} from '../services/API/api'
+import useAuth from "../hooks/useAuth";
 
 function encodeStrings(str1, str2) {
     const delimiter = '|';
@@ -28,6 +25,11 @@ function encodeStrings(str1, str2) {
 //   const sortedStrings = encodedStr.split(delimiter).sort();
 //   return sortedStrings;
 // }
+
+function getIdsAsString(data) {
+  const ids = data.map(obj => obj.id);
+  return ids.join('%2C');
+}
 
 function formatRelativeTime(timestamp) {
   const date = timestamp.toDate(); // Convert Firebase timestamp to JavaScript Date object
@@ -68,13 +70,19 @@ function formatRelativeTime(timestamp) {
 
 
 
-function Chat() {
+function Chat({authToken}) {
+  console.log('auth token in chat', authToken);
+  const accessToken = useAuth(authToken);
+  console.log('access token in chat', accessToken);
   // Change state.users.users to state.users
   // const allUsers = useSelector(state => state.users.users);
   const [allUsers, setAllUsers] = useState(null);
   const [messages, setMessages] = useState(null);
   const [receiverData, setReceiverData] = useState(null);
   const [messageAdded, setMessageAdded] = useState(false);
+  const messagesEndRef = useRef(null);
+  const [playlists, setPlaylists] = useState(null);
+  const [compatabilityScore, setCompatabilityScore] = useState(null);
 
   const user = JSON.parse(localStorage.getItem('curr-user'));
   // console.log('user id in ayth', auth.currentUser.uid);
@@ -148,7 +156,17 @@ function Chat() {
 
     fetchData()
   
-  }, [db, roomId, receiverUID, messageAdded])
+  }, [db, roomId, receiverUID, messageAdded]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages]);
+
+  // 
 
 
   // Handles the submit functionality.
@@ -174,13 +192,40 @@ function Chat() {
       e.target.reset();
   }
 
-  console.log('messages:', messages);
-  console.log('receiverData', receiverData);
 
+
+  // const calculateCompatabilityFn = async () => {
+  //   const currentUser = allUsers.filter(userList => userList.uid === user.uid)[0];
+  //   console.log('currentUser', currentUser);
+  //   await calculateCompatability(currentUser.spotify.topTracks, receiverData.spotify.topTracks)
+
+    
+  // }
+  useEffect(() => {
+    if (allUsers && receiverData && accessToken) {
+      const currentUser = allUsers.filter(userList => userList.uid === user.uid)[0];
+      // REMOVE [0] LATER!!!!!!!!!!!!!
+      const userTracksAsId = getIdsAsString(currentUser.spotify.topTracks.items);
+      console.log("userTracksAsId", userTracksAsId);
+      const receiverTracksAsId = getIdsAsString(receiverData.spotify.topTracks.items, accessToken);
+
+      calculateCompatability(userTracksAsId, receiverTracksAsId, accessToken).then(data => {
+        setCompatabilityScore(data)})
+      .catch(e => {
+        console.log('error in pulling data from python at Chat.jsx')
+        console.error(e)
+      })
+      
+    }
+  }, [allUsers, receiverData, user, accessToken]);
+  
+  console.log('compatabilityScore', compatabilityScore);
   if (receiverData && messages && allUsers) {
   return (
+    <>
+    {compatabilityScore && <h1 className="absolute"> {compatabilityScore}</h1>}
 
-      <div className="flex flex-col mb-10 h-full justify-between" id="entire chat">
+    <div className="flex flex-col mb-10 h-full justify-between" id="entire chat">
         <div>
           <div id="headerNameAndPic" className="flex items-center m-5" >
             <img className="w-10 h-10 rounded-full" src={receiverData.spotify.currUserProfile.images[0].url} alt="" />
@@ -217,6 +262,7 @@ function Chat() {
             </div>
           );
         })}
+        <div ref={messagesEndRef}/>
         </div>
     <div className="sticky bottom-10 w-full" id="input chat">
       <form onSubmit={handleMessageSubmit} className="w-11/12 mx-auto">
@@ -224,6 +270,7 @@ function Chat() {
       </form>
     </div>
       </div>
+  </>
   )
   } else {
     return (

@@ -43,7 +43,7 @@ function App() {
          
 
         <Route path='all' element= {<AllChats />} >
-          <Route path="chat/:receiverUID" element={<Chat />} />
+          <Route path="chat/:receiverUID" element={<Chat authToken={code} />} />
         </Route>
       </Route>
   </Routes>

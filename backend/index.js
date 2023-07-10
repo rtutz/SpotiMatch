@@ -5,10 +5,13 @@ const app = express();
 const cors = require('cors');
 const querystring = require('querystring');
 const SpotifyWebApi = require('spotify-web-api-node');
-const calculateSimilarityScore = require('./pullPython')
+const calculateSimilarityScore = require('./pullPython');
+const bodyParser = require('body-parser');
+const fs = require('fs');
 
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 app.get('/login/link', (req, res) => { 
     const scope = 'user-read-private user-read-email user-top-read user-follow-read playlist-read-private';
@@ -66,18 +69,49 @@ app.post('/login/refresh', (req, res) => {
 })
 
 app.post('/calculate', async (req, res) => {
-  const playlist1 = req.body.playlist1;
-  const playlist2 = req.body.playlist2;
+  const playlist1 = req.body.playlist1.audio_features;
+  const playlist2 = req.body.playlist2.audio_features;
 
   try {
     const val = await calculateSimilarityScore(playlist1, playlist2);
-    console.log(val);
     res.json(val);
   } catch (error) {
     console.log(error);
     res.json(error)
   }
 });
+
+// app.post('/calculate', async (req, res) => {
+//   const playlist1 = req.body.playlist1;
+//   const playlist2 = req.body.playlist2;
+
+//   // console.log('playlist1', playlist1);
+//   // console.log('playlist2', playlist2);
+
+//   // Write the input data to a file
+  
+//   const inputFilePath = 'input.json';
+//   fs.writeFileSync(inputFilePath, JSON.stringify([playlist1, playlist2]));
+
+//   try {
+//     // Execute the Python script
+//     const resultFilePath = 'output.json';
+//     await calculateSimilarityScore(inputFilePath, resultFilePath);
+
+//     // Read the result from the output file
+//     const result = JSON.parse(fs.readFileSync(resultFilePath));
+
+//     // Delete the temporary files
+//     fs.unlinkSync(inputFilePath);
+//     fs.unlinkSync(resultFilePath);
+
+//     console.log('result in backend', result);
+//     res.json(result);
+//   } catch (error) {
+//     console.log(error);
+//     res.json(error);
+//   }
+// });
 
 
 app.listen(3000, () => {console.log('listening on port 3000')});

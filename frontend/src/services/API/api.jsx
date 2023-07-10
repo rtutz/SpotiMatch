@@ -93,4 +93,31 @@ export const getIndividualTrack = async (accessToken, artistId) => {
         console.log('API ERROR (error in api.jsx)', e)
 
     }   
+};
+
+export const calculateCompatability = async (playlist1URL, playlist2URL, accessToken) => {
+    console.log('access token in api calculate', accessToken);
+    const config = {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    };
+    try {
+        const playlist1Data = await axios.get(`https://api.spotify.com/v1/audio-features?ids=${playlist1URL}`, config);
+
+        const playlist2Data = await axios.get(`https://api.spotify.com/v1/audio-features?ids=${playlist1URL}`, config);
+
+        console.log('playlist state as of right now:', {playlist1: playlist1Data.data, playlist2: playlist2Data.data});
+
+        const calculatedScore = await axios.post('http://localhost:3000/calculate', {playlist1: playlist1Data.data, playlist2: playlist2Data.data});
+        
+
+        return calculatedScore.data
+
+
+    } catch(e) {
+        console.log('error in calculateCompatability');
+        console.error(e)
+    }
+    // const result = await axios.post('http://localhost:3000/calculate', {playlist1, playlist2});
+    // console.log('RESULT!!!!!!!', result);
+    // return result;
 }
