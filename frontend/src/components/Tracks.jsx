@@ -56,7 +56,7 @@ export default function Tracks({authToken}) {
 
                     {topTracksData.topTracks.items.map(track => {
                         return (
-                        <div key={track.external_ids.isrc} className="flex justify-between items-center pb-8 group">
+                        <div key={track.external_ids.isrc}  onClick={() => {navigate(`/dashboard/tracks/${track.id}`)}}className="flex justify-between items-center pb-8 group">
                             <div className="flex items-center">
                                 <div className="relative">
                                 <img className="" src={track.album.images[2].url} alt="" />

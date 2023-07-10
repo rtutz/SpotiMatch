@@ -68,7 +68,7 @@ export default function Profile({authToken}) {
                         <img src={profileData.currUserProfile.images[1].url} alt="" className="object-cover h-40 w-40 rounded-full" />
                         
                         </div>
-                        <h1 className="font-spotify font-black mt-10 text-5xl">{profileData.currUserProfile.display_name}</h1>
+                        <h1 className="font-spotify font-black mt-10 text-5xl text-center">{profileData.currUserProfile.display_name}</h1>
 
 
                         <div className="flex justify-evenly w-full m-6" id="follow">

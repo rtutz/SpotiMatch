@@ -79,14 +79,14 @@ export const getIndividualArtist = async (accessToken, artistId) => {
     }   
 }
 
-export const getIndividualTrack = async (accessToken, artistId) => {
+export const getIndividualTrack = async (accessToken, trackId) => {
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
     };
     try {
         let fData = {};
-        const individualArtist = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, config);
-        fData.individualArtist = individualArtist.data;
+        const individualTrack = await axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, config);
+        fData.individualTrack = individualTrack.data;
 
         return fData;
     } catch (e) {

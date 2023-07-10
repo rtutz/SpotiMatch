@@ -31,7 +31,7 @@ function App() {
         <Route path='profile' element={<Profile authToken={code} />}/>
         <Route path='artists' element={<Artists/>}/>
         <Route exact path='tracks' element={<Tracks authToken={code}/>}/>
-        <Route path='tracks/:id' element={<IndividualTrack />} />
+        <Route path='tracks/:id' element={<IndividualTrack  authToken={code}/>} />
 
         <Route path='artists/:id' element={<IndividualArtist authToken={code} />} />
         {/* <Route path='playlist' element={<Playlist/>}>

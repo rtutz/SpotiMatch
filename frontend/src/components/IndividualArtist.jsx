@@ -15,7 +15,7 @@ export default function IndividualArtist({authToken}) {
         console.log('artist id' , artistId);
         getIndividualArtist(accessToken, artistId).then( data => {
             setArtistData(data);
-        }, [accessToken])
+        }).catch(e => {console.error(e)})
 
     }, [accessToken, artistId])
     
