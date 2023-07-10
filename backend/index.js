@@ -76,7 +76,7 @@ app.post('/calculate', async (req, res) => {
     const val = await calculateSimilarityScore(playlist1, playlist2);
     res.json(val);
   } catch (error) {
-    console.log(error);
+    console.eroor(error);
     res.json(error)
   }
 });

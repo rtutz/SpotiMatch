@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import Loading from '../assets/Loading';
 import {calculateCompatability} from '../services/API/api'
 import useAuth from "../hooks/useAuth";
+import Popup from "./Popup";
 
 function encodeStrings(str1, str2) {
     const delimiter = '|';
@@ -81,8 +82,8 @@ function Chat({authToken}) {
   const [receiverData, setReceiverData] = useState(null);
   const [messageAdded, setMessageAdded] = useState(false);
   const messagesEndRef = useRef(null);
-  const [playlists, setPlaylists] = useState(null);
   const [compatabilityScore, setCompatabilityScore] = useState(null);
+  const [showCompatability, setShowCompatability] = useState(false);
 
   const user = JSON.parse(localStorage.getItem('curr-user'));
   // console.log('user id in ayth', auth.currentUser.uid);
@@ -218,18 +219,25 @@ function Chat({authToken}) {
       
     }
   }, [allUsers, receiverData, user, accessToken]);
+
+  showCompatability ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
   
-  console.log('compatabilityScore', compatabilityScore);
+  console.log('compatabilityScore', typeof(compatabilityScore));
   if (receiverData && messages && allUsers) {
   return (
     <>
-    {compatabilityScore && <h1 className="absolute"> {compatabilityScore}</h1>}
-
     <div className="flex flex-col mb-10 h-full justify-between" id="entire chat">
-        <div>
+        <div className="relative">
+
+          {(showCompatability && compatabilityScore) && <Popup score={compatabilityScore} setShowCompatability={setShowCompatability} scrollToBottom={scrollToBottom} />}
+        
           <div id="headerNameAndPic" className="flex items-center m-5" >
             <img className="w-10 h-10 rounded-full" src={receiverData.spotify.currUserProfile.images[0].url} alt="" />
             <h1 className="ml-4 font-black tracking-wide">{receiverData.spotify.currUserProfile.display_name}</h1>
+
+            <button className="btn-green ml-3 top-0 left-0" onClick={() => {setShowCompatability(true)}}>
+              Calculate compatability
+            </button>
           </div>
   
   
@@ -264,7 +272,7 @@ function Chat({authToken}) {
         })}
         <div ref={messagesEndRef}/>
         </div>
-    <div className="sticky bottom-10 w-full" id="input chat">
+    <div className="sticky bottom-10 w-full z-10" id="input chat">
       <form onSubmit={handleMessageSubmit} className="w-11/12 mx-auto">
         <input type="text" className="placeholder-gray-600-spotify w-full bg-gray-500-spotify p-5 rounded-full" placeholder="Type your message here..." name="currentMessage" />
       </form>

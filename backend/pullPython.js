@@ -37,7 +37,6 @@ function calculateSimilarityScore(playlist1, playlist2) {
 
     py.stdout.on('data', function (data) {
       dataString = JSON.parse(data.toString());
-      console.log('dataString', dataString);
       resolve(dataString); // Resolve the promise with the dataString value
     });
 

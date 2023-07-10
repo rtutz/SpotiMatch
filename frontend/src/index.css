@@ -41,3 +41,7 @@
 .btn {
   @apply whitespace-nowrap bg-transparent border border-white px-6 py-3 rounded-full text-xs tracking-wide font-bold hover:bg-white hover:text-black duration-300 
 }
+
+.btn-green {
+  @apply whitespace-nowrap bg-spotify-green-2 px-6 py-3 rounded-full text-xs tracking-wide font-bold hover:bg-white hover:text-black duration-300 
+}
