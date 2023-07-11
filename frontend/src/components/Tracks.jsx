@@ -19,7 +19,6 @@ export default function Tracks({authToken}) {
     useEffect(() => {
         if (!accessToken) return;
         getTopTracks(accessToken, activeButton[1]).then(data => {
-            console.log(data);
             if (!data) throw new Error('Error in API request');
             setTopTracksData(data);
         }).catch(e => {
@@ -30,7 +29,6 @@ export default function Tracks({authToken}) {
     }, [accessToken, activeButton])
 
     if (topTracksData) {
-        console.log('TopTracks', topTracksData);
         return (
             <div className="container mb-10">
                 <div className="flex justify-between items-center mb-8" id="header">

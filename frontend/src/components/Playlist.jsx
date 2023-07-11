@@ -33,7 +33,7 @@ export default function Playlist({ authToken }) {
 
                     {playlistsData.playlists.items.map(playlist => {
                         return (
-                        <div key = {playlist.href} className="flex flex-col justify-center items-center group">
+                        <div key = {playlist.href}  onClick={() => {navigate(`/dashboard/playlist/${playlist.id}`)}} className="flex flex-col justify-center items-center group">
                         <div className="relative">
                             <img src={playlist.images[0].url} className="mb-4" alt="" />
                             <div className="opacity-0 bg-black w-full h-full absolute top-0 group-hover:opacity-50 transition-opacity duration-300 ease-in-out"></div>

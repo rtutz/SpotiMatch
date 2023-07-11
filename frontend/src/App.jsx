@@ -39,7 +39,7 @@ function App() {
 
         </Route> */}
         <Route exact path='playlist' element={<Playlist/>} />
-        <Route path='playlist/:id' element={<IndividualPlaylist />} />
+        <Route path='playlist/:id' element={<IndividualPlaylist authToken={code}/>} />
          
 
         <Route path='all' element= {<AllChats />} >

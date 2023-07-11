@@ -95,6 +95,38 @@ export const getIndividualTrack = async (accessToken, trackId) => {
     }   
 };
 
+export const getTrackAnalysis = async (accessToken, trackId) => {
+    const config = {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    };
+    try {
+        let fData = {};
+        const trackAnalysis = await axios.get(`https://api.spotify.com/v1/audio-features/${trackId}`, config);
+        fData.trackAnalysis = trackAnalysis.data;
+
+        return fData;
+    } catch (e) {
+        console.log('API ERROR (error in api.jsx)', e)
+
+    }   
+};
+
+export const getIndividualPlaylist = async (accessToken, trackId) => {
+    const config = {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    };
+    try {
+        let fData = {};
+        const individualTrack = await axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, config);
+        fData.individualTrack = individualTrack.data;
+
+        return fData;
+    } catch (e) {
+        console.log('API ERROR (error in api.jsx)', e)
+
+    }   
+};
+
 export const calculateCompatability = async (playlist1URL, playlist2URL, accessToken) => {
     console.log('access token in api calculate', accessToken);
     const config = {
