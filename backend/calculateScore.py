@@ -4,10 +4,23 @@ from sklearn.metrics.pairwise import cosine_similarity
 import sys
 import json
 import ast
-
-
 def calculate_similarity_score(playlist1, playlist2):
     # Extract the song features from the JSON responses
+    # playlist1 = json.loads(playlist1)
+    # playlist2 = json.loads(playlist2)
+
+    # song.pop("type")
+    # song.pop("id")
+    # song.pop("uri")
+    # song.pop("track_href")
+    # song.pop("analysis_url")
+    #
+    # playlist2.pop("type")
+    # playlist2.pop("id")
+    # playlist2.pop("uri")
+    # playlist2.pop("track_href")
+    # playlist2.pop("analysis_url")
+
     for song in playlist1:
         song.pop("type")
         song.pop("id")
@@ -21,7 +34,6 @@ def calculate_similarity_score(playlist1, playlist2):
         song.pop("uri")
         song.pop("track_href")
         song.pop("analysis_url")
-
 
     features1 = [list(song.values()) for song in playlist1]
     features2 = [list(song.values()) for song in playlist2]
@@ -37,7 +49,6 @@ def calculate_similarity_score(playlist1, playlist2):
     compatibility_score = np.mean(similarity_scores) * 100
 
     return compatibility_score
-
 
 def get_index_for_key(key):
     key_mapping = {

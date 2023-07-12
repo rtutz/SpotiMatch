@@ -25,7 +25,7 @@ export default function Search() {
                 tempPeople.push({...doc.data(), id: doc.id});
             });
             setPeople(tempPeople);
-            dispatch(setUsers(tempPeople));
+            // dispatch(setUsers(tempPeople));
         })
     }, []);
 

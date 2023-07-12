@@ -4,7 +4,8 @@ import {useDispatch} from'react-redux';
 // import { setUser } from '../features/userSlice';
 import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import { getFirestore, setDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import logo from '../assets/logo.svg';
 
 function Signup() {
     const dispatch = useDispatch();
@@ -31,15 +32,35 @@ function Signup() {
             cookies.set('auth-token', refreshToken); 
 
             const db = getFirestore();
-            const usersDoc = doc(db, "users", uid); // Use the doc function instead of collection
+            const usersDoc = doc(db, "users", uid);
 
-            setDoc(usersDoc, { uid, email, username})
-            .then(() => {
-                console.log('Document successfully written!');
-            })
-            .catch((error) => {
-                console.error('Error writing document: ', error);
+            console.log('here in sign up');
+
+            onSnapshot(usersDoc, (docSnapshot) => {
+            if (docSnapshot.exists()) {
+                // Document exists, perform update
+                updateDoc(usersDoc, { uid, email, username })
+                .then(() => {
+                    console.log('Document successfully updated!');
+                })
+                .catch((error) => {
+                    console.error('Error updating document: ', error);
+                });
+            } else {
+                // Document doesn't exist, perform creation
+                setDoc(usersDoc, { uid, email, username }, { merge: true })
+                .then(() => {
+                    console.log('Document successfully created!');
+                })
+                .catch((error) => {
+                    console.error('Error creating document: ', error);
+                });
+            }
             });
+
+            // Later, when you want to stop listening to changes:
+            // unsubscribe();  // Call this to unsubscribe from the snapshot listener
+
                             
             }
         ).catch(error => {
@@ -53,16 +74,31 @@ function Signup() {
     }
 
     return (
-        <>
-        <form action="submit" onSubmit={submitSignup} className='text-black'>
-            {/* <input type="text" name="username" placeholder="Username" /> */}
-            <input type="text" name="email" placeholder="Email" />
-            <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" />
-            {/* <input type="password" name="passwordVerify" placeholder="Type password again" /> */}
-            <button type="submit">Signup</button>
-        </form>
-        </>
+        // <>
+        // <form action="submit" onSubmit={submitSignup} className='text-black'>
+        //     {/* <input type="text" name="username" placeholder="Username" /> */}
+        //     <input type="text" name="email" placeholder="Email" />
+        //     <input type="text" name="username" placeholder="Username" />
+        //     <input type="password" name="password" placeholder="Password" />
+        //     {/* <input type="password" name="passwordVerify" placeholder="Type password again" /> */}
+        //     <button type="submit">Signup</button>
+        // </form>
+        // </>
+        <div className='flex items-center justify-center h-screen'>
+            <div className='flex flex-col justify-center items-center'>
+                <img src={logo} alt="" className='w-52' />
+                <h1 className='font-black text-5xl'>SpotiMatch</h1>
+                <h1 className='text-3xl tracking-widest'>Connect musically</h1>
+
+                <form action="submit" className='mt-4 text-black flex flex-col space-y-4 items-center' onSubmit={submitSignup}>
+                    <input type="text" name="email" placeholder="Email" className='px-1 py-1 w-60 rounded-md'/>
+                    <input type="text" name="username" placeholder="Username" className='px-1 py-1 w-60 rounded-md'/>
+                    <input type="password" name="password" placeholder="Password" className='px-1 py-1 w-60 rounded-md'/>
+                    <button type="submit" style={{"margin-top": "2rem"}} className='btn-green max-w-fit'>Signup</button>
+            </form>
+            </div>
+
+        </div>
     )
 }
 

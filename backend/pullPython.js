@@ -29,6 +29,9 @@ function calculateSimilarityScore(playlist1, playlist2) {
 
   // py.stdin.write(JSON.stringify(data));
   // py.stdin.end();
+  console.log('pl1 length',playlist1.length);
+  console.log('pl2 length',playlist2.length);
+
   return new Promise((resolve, reject) => {
     var spawn = require('child_process').spawn,
       py = spawn('python', ['./calculateScore.py']),
@@ -37,6 +40,7 @@ function calculateSimilarityScore(playlist1, playlist2) {
 
     py.stdout.on('data', function (data) {
       dataString = JSON.parse(data.toString());
+      console.log(dataString);
       resolve(dataString); // Resolve the promise with the dataString value
     });
 

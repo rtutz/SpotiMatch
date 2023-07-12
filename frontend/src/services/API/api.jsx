@@ -135,7 +135,7 @@ export const calculateCompatability = async (playlist1URL, playlist2URL, accessT
     try {
         const playlist1Data = await axios.get(`https://api.spotify.com/v1/audio-features?ids=${playlist1URL}`, config);
 
-        const playlist2Data = await axios.get(`https://api.spotify.com/v1/audio-features?ids=${playlist1URL}`, config);
+        const playlist2Data = await axios.get(`https://api.spotify.com/v1/audio-features?ids=${playlist2URL}`, config);
 
         console.log('playlist state as of right now:', {playlist1: playlist1Data.data, playlist2: playlist2Data.data});
 

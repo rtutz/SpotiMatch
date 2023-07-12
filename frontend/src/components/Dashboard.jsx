@@ -1,10 +1,12 @@
 import useAuth from '../hooks/useAuth';
 import { useDispatch } from 'react-redux';
-// import SpotifyWebApi from 'spotify-web-api-node';
 import { setAccessToken } from '../features/accessTokenSlice';
 import {Link, Outlet, useNavigate} from 'react-router-dom';
 import logo from '../assets/logo.svg'
 import github from '../assets/github.svg'
+import { getFirestore, collection, query, onSnapshot} from "firebase/firestore";
+import {setUsers} from '../features/userSlice';
+import { useEffect } from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMusic, faCompactDisc, faComment } from '@fortawesome/free-solid-svg-icons';
@@ -22,11 +24,23 @@ function Dashboard({ code }) {
     const accessToken = useAuth(code);
     const dispatch = useDispatch();
 
-    if (!cookieBrowser) {
-        navigate('/');
-    }
-    // const cookieUser = cookie.get('auth-token');
-    // const uid = cookieUser.uid;
+    // if (!cookieBrowser) {
+    //     navigate('/');
+    // }
+
+
+    useEffect(() => {
+        const db = getFirestore();
+        const usersRef = collection(db, "users");
+        const queryUsers = query(usersRef);
+        onSnapshot(queryUsers, (querySnapshot) => {
+            let tempPeople = [];
+            querySnapshot.forEach((doc) => {
+                tempPeople.push({...doc.data(), id: doc.id});
+            });
+            dispatch(setUsers(tempPeople));
+        })
+    }, []);
 
     dispatch(setAccessToken(accessToken));
 

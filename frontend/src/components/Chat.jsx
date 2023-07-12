@@ -206,9 +206,13 @@ function Chat({authToken}) {
     if (allUsers && receiverData && accessToken) {
       const currentUser = allUsers.filter(userList => userList.uid === user.uid)[0];
       // REMOVE [0] LATER!!!!!!!!!!!!!
-      const userTracksAsId = getIdsAsString(currentUser.spotify.topTracks.items);
+      const userTracksAsId = getIdsAsString(currentUser.spotify.topTracks.items.slice(0,1));
       console.log("userTracksAsId", userTracksAsId);
-      const receiverTracksAsId = getIdsAsString(receiverData.spotify.topTracks.items, accessToken);
+      
+      const receiverTracksAsId = getIdsAsString(receiverData.spotify.topTracks.items.slice(0,1));
+      
+      console.log("receiverTracksAsId", receiverTracksAsId);
+
 
       calculateCompatability(userTracksAsId, receiverTracksAsId, accessToken).then(data => {
         setCompatabilityScore(data)})
@@ -222,7 +226,7 @@ function Chat({authToken}) {
 
   showCompatability ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
   
-  console.log('compatabilityScore', typeof(compatabilityScore));
+  console.log('compatabilityScore', compatabilityScore);
   if (receiverData && messages && allUsers) {
   return (
     <>
