@@ -50,7 +50,7 @@ export default function Tracks({authToken}) {
                     </div>
                 </div>
 
-                <div className="flex flex-col bg-500-red h-20 w-full mb-20">
+                <div className="flex flex-col h-20 w-full mb-20">
 
                     {topTracksData.topTracks.items.map(track => {
                         return (

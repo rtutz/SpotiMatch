@@ -1,3 +1,5 @@
+import Countup from "./Countup";
+
 export default function Popup({score, setShowCompatability, scrollToBottom}) {
     
     return (
@@ -8,7 +10,9 @@ export default function Popup({score, setShowCompatability, scrollToBottom}) {
                 
                 <div className='flex flex-col items-center space-y-2'>
                     <h3 className="text-4xl font-bold tracking-wider">Your taste is </h3>
-                    <h1 className="text-7xl font-black text-spotify-green">{Math.round(parseFloat(score) * 100) / 100}%</h1>
+
+                    <Countup value={score}/>
+                    
                     <h3 className="text-5xl font-bold tracking-wider" style={{ marginBottom: '1rem' }}>compatible</h3>
                     <div onClick={() => {
                         setShowCompatability(false);
@@ -23,3 +27,5 @@ export default function Popup({score, setShowCompatability, scrollToBottom}) {
         </div>
     )
 }   
+
+// <h1 className="text-7xl font-black text-spotify-green">{Math.round(parseFloat(score) * 100) / 100}%</h1>

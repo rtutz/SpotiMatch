@@ -111,14 +111,14 @@ export const getTrackAnalysis = async (accessToken, trackId) => {
     }   
 };
 
-export const getIndividualPlaylist = async (accessToken, trackId) => {
+export const getIndividualPlaylist = async (accessToken, playlistId) => {
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
     };
     try {
         let fData = {};
-        const individualTrack = await axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, config);
-        fData.individualTrack = individualTrack.data;
+        const playlistData = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, config);
+        fData.playlistData = playlistData.data;
 
         return fData;
     } catch (e) {
