@@ -69,60 +69,60 @@ app.post('/login/refresh', (req, res) => {
 })
 
 app.post('/calculate', async (req, res) => {
-  // const playlist1 = req.body.playlist1.audio_features;
-  // const playlist2 = req.body.playlist2.audio_features;
-  const playlist1 = [
-    {
-        "acousticness": 0.01,
-        "analysis_url": "https://api.spotify.com/v1/audio-analysis/5sbooPcNgIE22DwO0VNGUJ",
-        "danceability": 0.01,
-        "duration_ms": 191100,
-        "energy": 0.01,
-        "id": "5sbooPcNgIE22DwO0VNGUJ",
-        "instrumentalness": 0,
-        "key": 7,
-        "liveness": 0.01,
-        "loudness": -4.342,
-        "mode": 1,
-        "speechiness": 0.01,
-        "tempo": 50.036,
-        "time_signature": 4,
-        "track_href": "https://api.spotify.com/v1/tracks/5sbooPcNgIE22DwO0VNGUJ",
-        "type": "audio_features",
-        "uri": "spotify:track:5sbooPcNgIE22DwO0VNGUJ",
-        "valence": 0.385
-    }
-]
+  const playlist1 = req.body.playlist1.audio_features;
+  const playlist2 = req.body.playlist2.audio_features;
+//   const playlist1 = [
+//     {
+//         "acousticness": 0.01,
+//         "analysis_url": "https://api.spotify.com/v1/audio-analysis/5sbooPcNgIE22DwO0VNGUJ",
+//         "danceability": 0.01,
+//         "duration_ms": 191100,
+//         "energy": 0.01,
+//         "id": "5sbooPcNgIE22DwO0VNGUJ",
+//         "instrumentalness": 0,
+//         "key": 7,
+//         "liveness": 0.01,
+//         "loudness": -4.342,
+//         "mode": 1,
+//         "speechiness": 0.01,
+//         "tempo": 50.036,
+//         "time_signature": 4,
+//         "track_href": "https://api.spotify.com/v1/tracks/5sbooPcNgIE22DwO0VNGUJ",
+//         "type": "audio_features",
+//         "uri": "spotify:track:5sbooPcNgIE22DwO0VNGUJ",
+//         "valence": 0.385
+//     }
+// ]
 
-const playlist2 = [
-    {
-        "acousticness": 0.169,
-        "analysis_url": "https://api.spotify.com/v1/audio-analysis/3k79jB4aGmMDUQzEwa46Rz",
-        "danceability": 0.511,
-        "duration_ms": 219724,
-        "energy": 0.532,
-        "id": "3k79jB4aGmMDUQzEwa46Rz",
-        "instrumentalness": 0,
-        "key": 5,
-        "liveness": 0.311,
-        "loudness": -5.745,
-        "mode": 1,
-        "speechiness": 0.056,
-        "tempo": 137.827,
-        "time_signature": 4,
-        "track_href": "https://api.spotify.com/v1/tracks/3k79jB4aGmMDUQzEwa46Rz",
-        "type": "audio_features",
-        "uri": "spotify:track:3k79jB4aGmMDUQzEwa46Rz",
-        "valence": 0.322
-    }
-]
+// const playlist2 = [
+//     {
+//         "acousticness": 0.169,
+//         "analysis_url": "https://api.spotify.com/v1/audio-analysis/3k79jB4aGmMDUQzEwa46Rz",
+//         "danceability": 0.511,
+//         "duration_ms": 219724,
+//         "energy": 0.532,
+//         "id": "3k79jB4aGmMDUQzEwa46Rz",
+//         "instrumentalness": 0,
+//         "key": 5,
+//         "liveness": 0.311,
+//         "loudness": -5.745,
+//         "mode": 1,
+//         "speechiness": 0.056,
+//         "tempo": 137.827,
+//         "time_signature": 4,
+//         "track_href": "https://api.spotify.com/v1/tracks/3k79jB4aGmMDUQzEwa46Rz",
+//         "type": "audio_features",
+//         "uri": "spotify:track:3k79jB4aGmMDUQzEwa46Rz",
+//         "valence": 0.322
+//     }
+// ]
 
   
   try {
     const val = await calculateSimilarityScore(playlist1, playlist2);
     res.json(val);
   } catch (error) {
-    console.eroor(error);
+    console.error(error);
     res.json(error)
   }
 });

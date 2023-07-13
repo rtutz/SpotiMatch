@@ -206,10 +206,10 @@ function Chat({authToken}) {
     if (allUsers && receiverData && accessToken) {
       const currentUser = allUsers.filter(userList => userList.uid === user.uid)[0];
       // REMOVE [0] LATER!!!!!!!!!!!!!
-      const userTracksAsId = getIdsAsString(currentUser.spotify.topTracks.items.slice(0,1));
+      const userTracksAsId = getIdsAsString(currentUser.spotify.topTracks.items);
       console.log("userTracksAsId", userTracksAsId);
       
-      const receiverTracksAsId = getIdsAsString(receiverData.spotify.topTracks.items.slice(0,1));
+      const receiverTracksAsId = getIdsAsString(receiverData.spotify.topTracks.items);
       
       console.log("receiverTracksAsId", receiverTracksAsId);
 
