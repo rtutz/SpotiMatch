@@ -18,14 +18,22 @@ export default function Playlist({ authToken }) {
             if (!data) throw new Error('Error in API request');
             setPlaylistsData(data);
         }).catch(e => {
-            console.error(e)
             localStorage.clear();
             navigate('/');
+            console.error(e);
+            return (
+            <div>
+                <h1>An error has been encountered. Please login again.</h1>
+                <button className="btn-green" onClick={() => navigate('/')}>
+                    Go Home
+                </button>
+            </div>
+            )
+            
         })
     }, [accessToken]);
 
     if (playlistsData) {
-        // console.log('Playlists', playlistsData);
         return (
             <div className="container mb-10">
                 <h1 className="font-black text-2xl mb-8">Top Tracks</h1>

@@ -44,6 +44,14 @@ export default function Profile({authToken}) {
             console.error(e)
             localStorage.clear();
             navigate('/');
+            return (
+                <div>
+                <h1>An error has been encountered. Please login again.</h1>
+                <button className="btn-green" onClick={() => navigate('/')}>
+                    Go Home
+                </button>
+            </div>
+            )
         });
 
 
@@ -55,6 +63,14 @@ export default function Profile({authToken}) {
         const cookies = new Cookies();
         cookies.remove('auth-token'); 
         navigate('/');
+        return (
+            <div>
+            <h1>An error has been encountered. Please login again.</h1>
+            <button className="btn-green" onClick={() => navigate('/')}>
+                Go Home
+            </button>
+        </div>
+        )
     }
 
     
@@ -129,15 +145,6 @@ export default function Profile({authToken}) {
                             SEE MORE
                             </button> 
                         </div>
-            
-                        {/* {profileData.topTracks.items.map(track => {
-                            return (
-                                <div key={track.name} className="flex items-center pb-6" id="row item">
-                            <img className="w-14 mr-8 rounded-full"src={track.album.images[2].url} alt="" />
-                            <h1>{track.name}</h1>
-                                </div>
-                            )
-                            })} */}
 
                     {profileData.topTracks.items.slice(0, 10).map(track => {
                     return (

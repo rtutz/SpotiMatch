@@ -27,5 +27,3 @@ export default function Popup({score, setShowCompatability, scrollToBottom}) {
         </div>
     )
 }   
-
-// <h1 className="text-7xl font-black text-spotify-green">{Math.round(parseFloat(score) * 100) / 100}%</h1>

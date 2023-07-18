@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import DisplayPeople from "./DisplayPeople";
 import { getFirestore, collection, query, onSnapshot} from "firebase/firestore";
-import {setUsers} from '../features/userSlice';
-import {useDispatch} from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +11,6 @@ export default function Search() {
     const [queryName, setQueryName] = useState("");
     const user = JSON.parse(localStorage.getItem('curr-user'));
 
-    const dispatch = useDispatch();
 
     useEffect(() => {
         const db = getFirestore();
@@ -25,7 +22,7 @@ export default function Search() {
                 tempPeople.push({...doc.data(), id: doc.id});
             });
             setPeople(tempPeople);
-            // dispatch(setUsers(tempPeople));
+
         })
     }, []);
 

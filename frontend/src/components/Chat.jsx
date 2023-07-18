@@ -9,7 +9,8 @@ import {
     getDocs,
    getDoc,
   orderBy} from "firebase/firestore";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import Loading from '../assets/Loading';
 import {calculateCompatability} from '../services/API/api'
 import useAuth from "../hooks/useAuth";
@@ -21,11 +22,6 @@ function encodeStrings(str1, str2) {
     return sortedStrings.join(delimiter);
   }
   
-// function decodeString(encodedStr) {
-//   const delimiter = '|';
-//   const sortedStrings = encodedStr.split(delimiter).sort();
-//   return sortedStrings;
-// }
 
 function getIdsAsString(data) {
   const ids = data.map(obj => obj.id);
@@ -72,11 +68,7 @@ function formatRelativeTime(timestamp) {
 
 
 function Chat({authToken}) {
-  console.log('auth token in chat', authToken);
   const accessToken = useAuth(authToken);
-  console.log('access token in chat', accessToken);
-  // Change state.users.users to state.users
-  // const allUsers = useSelector(state => state.users.users);
   const [allUsers, setAllUsers] = useState(null);
   const [messages, setMessages] = useState(null);
   const [receiverData, setReceiverData] = useState(null);
@@ -86,24 +78,17 @@ function Chat({authToken}) {
   const [showCompatability, setShowCompatability] = useState(false);
 
   const user = JSON.parse(localStorage.getItem('curr-user'));
-  // console.log('user id in ayth', auth.currentUser.uid);
+  const Navigate = useNavigate();
+  
 
   const db = getFirestore();
 
   const {receiverUID} = useParams();
 
-  console.log('allUsers', allUsers);
   useEffect(()=> {
     if (!receiverUID && !allUsers) return;
     const fetchUserInfo = async () => {
-      try {
-        // allUsers.forEach(userState => {
-        //   if (userState.uid === receiverUID) {
-        //     console.log(userState);
-        //     setReceiverData(userState);}
-        // })
-        // EITHER PULL DATA FROM DATABASE ORRR JUST USE STATE TO GET DATA
-        
+      try { 
         const colRef = collection(db, 'users');
         const u = query(colRef);
         const queryUsers = await getDocs(u);
@@ -118,6 +103,12 @@ function Chat({authToken}) {
 
       } catch (e) {
         console.error(e);
+        <div>
+        <h1>An error has been encountered. Please login again.</h1>
+        <button className="btn-green" onClick={() => Navigate('/')}>
+            Go Home
+        </button>
+    </div>
       }
     };
     fetchUserInfo();
@@ -126,22 +117,15 @@ function Chat({authToken}) {
 
   
   const roomId = encodeStrings(user.uid, receiverUID);
-  // const chatRoomRef =  doc(collection(db, 'chatRooms'), roomId);
-  // setDoc(chatRoomRef, {participants: [user.uid, receiverUID]});
-  // const messagesCollectionRef = collection(chatRoomRef, 'messages');
 
-  // Renders the messages.
   useEffect(() => {
     
     const fetchData = async () => {
-      console.log('database', db);
       const docRef = doc(db, 'chatRooms', roomId);
       const docSnap = await getDoc(docRef);
       if (!(docSnap.exists())) {
-        // console.log('roomId does not exist. No chat before'); 
         setMessages([]); 
         return;}
-      // console.log('roomId exists. chatted before');
       const chatRoomRef =  doc(collection(db, 'chatRooms'), roomId);
       const messagesCollectionRef = collection(chatRoomRef, 'messages');
       const queryMessages = query(messagesCollectionRef, orderBy("date"));
@@ -167,10 +151,8 @@ function Chat({authToken}) {
     scrollToBottom()
   }, [messages]);
 
-  // 
 
 
-  // Handles the submit functionality.
   const handleMessageSubmit = async (e) => {
       setMessageAdded(!messageAdded);
       e.preventDefault();
@@ -193,32 +175,25 @@ function Chat({authToken}) {
       e.target.reset();
   }
 
-
-
-  // const calculateCompatabilityFn = async () => {
-  //   const currentUser = allUsers.filter(userList => userList.uid === user.uid)[0];
-  //   console.log('currentUser', currentUser);
-  //   await calculateCompatability(currentUser.spotify.topTracks, receiverData.spotify.topTracks)
-
-    
-  // }
   useEffect(() => {
     if (allUsers && receiverData && accessToken) {
       const currentUser = allUsers.filter(userList => userList.uid === user.uid)[0];
-      // REMOVE [0] LATER!!!!!!!!!!!!!
       const userTracksAsId = getIdsAsString(currentUser.spotify.topTracks.items);
-      console.log("userTracksAsId", userTracksAsId);
+
       
       const receiverTracksAsId = getIdsAsString(receiverData.spotify.topTracks.items);
-      
-      console.log("receiverTracksAsId", receiverTracksAsId);
 
 
       calculateCompatability(userTracksAsId, receiverTracksAsId, accessToken).then(data => {
         setCompatabilityScore(data)})
       .catch(e => {
-        console.log('error in pulling data from python at Chat.jsx')
-        console.error(e)
+        console.error(e);
+        <div>
+        <h1>An error has been encountered. Please login again.</h1>
+        <button className="btn-green" onClick={() => Navigate('/')}>
+            Go Home
+        </button>
+    </div>
       })
       
     }
@@ -226,7 +201,6 @@ function Chat({authToken}) {
 
   showCompatability ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
   
-  console.log('compatabilityScore', compatabilityScore);
   if (receiverData && messages && allUsers) {
   return (
     <>
@@ -245,11 +219,10 @@ function Chat({authToken}) {
           </div>
   
   
-          {/* FORR MESSAGESSSS */}
           {messages.map((message) => {
           const content = message.content;
           const senderUID = message.senderUID;
-          let senderProfileName = null; // Initialize the variable
+          let senderProfileName = null; 
           let senderProfilePic;
   
           allUsers.forEach((item) => {
@@ -292,18 +265,3 @@ function Chat({authToken}) {
 }
 
 export default Chat;
-
-
-      // <>
-      // <h1>Individual Chat</h1>
-      // {messages.map((message) => (
-      //   <div key={message.id} className="message">
-      //     <span className="user">{}:</span> {message.content}
-      //   </div>
-      // ))}
-
-      // <form onSubmit={handleMessageSubmit}>
-      //     <input type="text" placeholder="Type your message here..." name='currentMessage'/>
-      //     <button type="submit">Send</button>
-      // </form>
-      // </>

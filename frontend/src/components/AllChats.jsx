@@ -1,33 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getFirestore, 
     collection, 
     query, 
     onSnapshot,
     getDocs} from "firebase/firestore";
-import { auth } from '../services/firebase/config'
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
+
 import Search from "./Search";
-import { useSelector } from "react-redux";
 import Loading from '../assets/Loading'
-import { Link } from "react-router-dom";
-
-// import { Link } from "react-router-dom";
-
-// import Search from "./Search";
-
-// This component renders all the chats we've done before. This is necessary
-// since it supplies the chatID (i.e. what chat is currently open) to Chat.jsx
-
 
 function AllChats() {
     const [allUsers, setAllUsers] = useState(null);
     const [pplWithConvo, setPplWithConvo] = useState(null);
 
     const user = JSON.parse(localStorage.getItem('curr-user'));
-
-    // const user = {uid: '8738wVe5QwaYOCNWDbj96J2xPxs1'}
+    const Navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -55,8 +42,8 @@ function AllChats() {
                 });
 
                 const colRef = collection(db, 'users');
-                const u = query(colRef);
-                const queryUsers = await getDocs(u);
+                const userQuery = query(colRef);
+                const queryUsers = await getDocs(userQuery);
 
                 const tempAllUsers = [];
                 queryUsers.forEach(doc => {
@@ -65,33 +52,24 @@ function AllChats() {
 
                 setAllUsers(tempAllUsers);
             } catch (e) {
-                console.log('error in allChats.jsx');
-                console.error(e);
+                return (
+                    
+                    <div>
+                        <h1>An error has been encountered. Please login again.</h1>
+                        <button className="btn-green" onClick={() => Navigate('/')}>
+                            Go Home
+                        </button>
+                    </div>
+                )
             }
         }
         fetchUsers();
 
-    }, [user.uid])
-    console.log("pplWithConvo", pplWithConvo);
-    console.log('allUsers', allUsers);
+    }, [Navigate, user.uid])
+ 
 
     if (pplWithConvo && allUsers) {
     return (
-    //     <div>
-    //         <h1>All Chats</h1>
-    //         <Search />
-    //         <h3>Past converstations</h3>
-    //             <ul>   
-    //             {pplWithConvo.map((chat) => (
-    //             <li key={chat.receiverUID}>
-    //                 <Link to={`/dashboard/all/chat/${chat.receiverUID}`}>
-    //                 {chat.receiverUID}
-    //                 </Link>
-    //             </li>
-    //             ))}
-    //             </ul>
-    //   <Outlet />
-    //     </div>
 
     <div className="flex w-full ml-2">
         <div className="border-r-gray-950 border-r-2 min-w-max">

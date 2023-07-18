@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { getIndividualArtist } from "../services/API/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from '../assets/Loading'
 
 
@@ -9,15 +9,26 @@ export default function IndividualArtist({authToken}) {
     const accessToken = useAuth(authToken);
     const artistId = useParams().id;
     const [artistData, setArtistData] = useState(null);
+    const Navigate = useNavigate;
 
     useEffect(() => {
         if (!accessToken) return;
         console.log('artist id' , artistId);
         getIndividualArtist(accessToken, artistId).then( data => {
             setArtistData(data);
-        }).catch(e => {console.error(e)})
+        }).catch(e => {
+            console.error(e);
+            return (
+            <div>
+                <h1>An error has been encountered. Please login again.</h1>
+                <button className="btn-green" onClick={() => Navigate('/')}>
+                    Go Home
+                </button>
+            </div>
+            )
+        })
 
-    }, [accessToken, artistId])
+    }, [accessToken, artistId, Navigate])
     
     console.log('artist data', artistData);
     if (artistData) {
@@ -33,10 +44,6 @@ export default function IndividualArtist({authToken}) {
                         <h3 className="text-spotify-green font-bold text-xl">{(() => artistData.individualArtist.followers.total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","))()}</h3>
                         <p className="text-gray-200-spotify text-xs tracking-wider">FOLLOWERS</p>
                     </div>
-
-                    {/* x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") 
-                    
-                    artistData.individualArtist.followers.total*/}
 
                     <div className="flex flex-col items-center justify-center">
                         <h3 className="text-spotify-green font-bold text-xl">{artistData.individualArtist.genres.join(', ')}</h3>

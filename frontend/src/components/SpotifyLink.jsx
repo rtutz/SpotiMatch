@@ -2,9 +2,6 @@ import logo from '../assets/logo.svg'
 
 function SpotifyLink(){
     return (
-        // <div>
-        //     <a href="http://localhost:3000/login/link">Connect with Spotify</a>
-        // </div>
         <div className='flex items-center justify-center h-screen'>
             <div className='flex flex-col justify-center items-center'>
                 <img src={logo} alt="" className='w-52' />

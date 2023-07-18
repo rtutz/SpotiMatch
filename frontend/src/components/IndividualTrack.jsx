@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getIndividualTrack, getTrackAnalysis} from "../services/API/api";
 import Loading from '../assets/Loading';
 import {
@@ -29,6 +29,7 @@ export default function IndividualTrack({authToken }) {
     const trackId = useParams().id;
     const [trackData, setTrackData] = useState(null);
     const [trackAnalysis, setTrackAnalysis] = useState(null);
+    const Navigate = useNavigate();
 
     const labels = ['valence', 'acousticness', 'danceability', 'energy', 'liveness', 'instrumentalness'];
     const options = {
@@ -49,20 +50,26 @@ export default function IndividualTrack({authToken }) {
     };
 
     useEffect(() => {
-        if (!accessToken) return;
+        try {if (!accessToken) return;
         (async () => {
             const dataTrack = await getIndividualTrack(accessToken, trackId);
             setTrackData(dataTrack);
             const analysisTrack = await getTrackAnalysis(accessToken, trackId);
             setTrackAnalysis(analysisTrack)
-        })()
+        })()} 
+        catch (e) {
+            console.error(e);
+            return (
+            <div>
+                <h1>An error has been encountered. Please login again.</h1>
+                <button className="btn-green" onClick={() => Navigate('/')}>
+                    Go Home
+                </button>
+            </div>
+            )
+        }
 
     }, [accessToken, trackId])
-
-    if (trackAnalysis) {
-        console.log(trackAnalysis.trackAnalysis);
-        console.log(labels.map(label => trackAnalysis.trackAnalysis[label]));
-    }
 
     if (trackData && trackAnalysis) {
     return (

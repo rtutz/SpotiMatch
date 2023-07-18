@@ -15,10 +15,22 @@ export default function IndividualPlaylist({authToken}) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!accessToken) return;
-        getIndividualPlaylist(accessToken, playlistId).then( data => {
-            setPlaylistData(data.playlistData);
-        }, [accessToken])
+        try {
+            if (!accessToken) return;
+            getIndividualPlaylist(accessToken, playlistId).then( data => {
+                setPlaylistData(data.playlistData);
+            }, [accessToken])
+        } catch (e) {
+            console.error(e);
+            return (
+            <div>
+                <h1>An error has been encountered. Please login again.</h1>
+                <button className="btn-green" onClick={() => navigate('/')}>
+                    Go Home
+                </button>
+            </div>
+            )
+        }
 
     }, [accessToken, playlistId])
 

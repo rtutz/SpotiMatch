@@ -11,26 +11,18 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMusic, faCompactDisc, faComment } from '@fortawesome/free-solid-svg-icons';
 
-import Cookies from 'universal-cookie'
-const cookie = new Cookies();
 
-// This serves as the whole Dashboard after logging in.
-// eslint-disable-next-line react/prop-types
 function Dashboard({ code }) {
-    const cookieBrowser = cookie.get('auth-token');
-
-    const navigate = useNavigate();
 
     const accessToken = useAuth(code);
     const dispatch = useDispatch();
 
-    // if (!cookieBrowser) {
-    //     navigate('/');
-    // }
+    const Navigate = useNavigate();
 
 
     useEffect(() => {
-        const db = getFirestore();
+        try {
+            const db = getFirestore();
         const usersRef = collection(db, "users");
         const queryUsers = query(usersRef);
         onSnapshot(queryUsers, (querySnapshot) => {
@@ -40,6 +32,15 @@ function Dashboard({ code }) {
             });
             dispatch(setUsers(tempPeople));
         })
+        } catch (e) {
+            console.error(e);
+            <div>
+            <h1>An error has been encountered. Please login again.</h1>
+            <button className="btn-green" onClick={() => Navigate('/')}>
+                Go Home
+            </button>
+        </div>
+        }
     }, []);
 
     dispatch(setAccessToken(accessToken));
@@ -58,12 +59,7 @@ function Dashboard({ code }) {
                 </div>
                 </Link>
 
-                {/* <Link to='/dashboard/artists'>
-                <div className='text-center'>
-                <FontAwesomeIcon icon={faMicrophone} size='xl' className='text-gray-300'/>
-                <p>Top Artists</p>
-                </div>
-                </Link> */}
+
 
                 <Link to='/dashboard/tracks'>
                 <div className='text-center'>
