@@ -12,6 +12,12 @@ function SpotifyLink(){
                     <a href="http://localhost:3000/login/link">Connect with Spotify</a>
                 </div>
 
+                <div className="flex flex-col items-center justify-center mt-10">
+                    <p className="text-gray-200-spotify text-base tracking-wider mb-2">Due to Spotify API's limitations, please use this demo Spotify account: </p>
+                    <p className="text-gray-200-spotify text-sm tracking-wider">Email: rtutz.test@gmail.com</p>
+                    <p className="text-gray-200-spotify text-sm tracking-wider">Password: rtutz.test</p>
+                </div>
+
             </div>
 
         </div>
