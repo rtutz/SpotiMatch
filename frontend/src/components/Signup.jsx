@@ -30,10 +30,10 @@ function Signup() {
             const cookies = new Cookies();
             cookies.set('auth-token', refreshToken); 
 
+            localStorage.setItem('curr-user', JSON.stringify({uid, email}))
+
             const db = getFirestore();
             const usersDoc = doc(db, "users", uid);
-
-            console.log('here in sign up');
 
             onSnapshot(usersDoc, (docSnapshot) => {
             if (docSnapshot.exists()) {
@@ -82,7 +82,7 @@ function Signup() {
                     <input type="text" name="email" placeholder="Email" className='px-1 py-1 w-60 rounded-md'/>
                     <input type="text" name="username" placeholder="Username" className='px-1 py-1 w-60 rounded-md'/>
                     <input type="password" name="password" placeholder="Password" className='px-1 py-1 w-60 rounded-md'/>
-                    <button type="submit" style={{"margin-top": "2rem"}} className='btn-green max-w-fit'>Signup</button>
+                    <button type="submit" style={{"marginTop": "2rem"}} className='btn-green max-w-fit'>Signup</button>
             </form>
             </div>
 
