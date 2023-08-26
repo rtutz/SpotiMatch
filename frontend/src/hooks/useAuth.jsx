@@ -67,7 +67,7 @@ function useAuth(code){
                 dispatch(setAccessToken(res.data.access_token));
             })
             .catch((err) => {
-                
+                console.error(err)
                 
                 navigate('/')
             }); 
@@ -85,8 +85,7 @@ function useAuth(code){
                     
                 })
                 .catch((err) => {
-                    
-                    
+                    console.error(err)
                 });
         }, (expiresIn - 60) * 1000);
 
