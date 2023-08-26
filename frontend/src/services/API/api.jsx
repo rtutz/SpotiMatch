@@ -142,7 +142,7 @@ export const calculateCompatability = async (playlist1URL, playlist2URL, accessT
         // const calculatedScore = await
         // axios.post('http://localhost:3000/calculate', {playlist1:
         // playlist1Data.data, playlist2: playlist2Data.data});
-        const calculatedScore = await axios.post('https://spotimatch-api.netlify.app/calculate', {playlist1: playlist1Data.data, playlist2: playlist2Data.data});
+        const calculatedScore = await axios.post('https://spotimatch-api.onrender.com/calculate', {playlist1: playlist1Data.data, playlist2: playlist2Data.data});
         
 
         return calculatedScore.data
