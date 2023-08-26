@@ -67,8 +67,8 @@ function useAuth(code){
                 dispatch(setAccessToken(res.data.access_token));
             })
             .catch((err) => {
-                console.log('in useAuth error');
-                console.log(err);
+                
+                
                 navigate('/')
             }); 
     }, [code, dispatch]);
@@ -82,11 +82,11 @@ function useAuth(code){
                 .then((res) => {
                     setAccessTokenState(res.data.access_token);
                     setExpiresIn(res.data.expires_in);
-                    console.log('Token refreshed');
+                    
                 })
                 .catch((err) => {
-                    console.log('error in refresh token');
-                    console.log(err);
+                    
+                    
                 });
         }, (expiresIn - 60) * 1000);
 

@@ -131,8 +131,8 @@ app.post('/calculate', async (req, res) => {
 //   const playlist1 = req.body.playlist1;
 //   const playlist2 = req.body.playlist2;
 
-//   // console.log('playlist1', playlist1);
-//   // console.log('playlist2', playlist2);
+//   // 
+//   // 
 
 //   // Write the input data to a file
   
@@ -151,13 +151,13 @@ app.post('/calculate', async (req, res) => {
 //     fs.unlinkSync(inputFilePath);
 //     fs.unlinkSync(resultFilePath);
 
-//     console.log('result in backend', result);
+//     
 //     res.json(result);
 //   } catch (error) {
-//     console.log(error);
+//     
 //     res.json(error);
 //   }
 // });
 
 
-app.listen(3000, () => {console.log('listening on port 3000')});
+app.listen(3000);

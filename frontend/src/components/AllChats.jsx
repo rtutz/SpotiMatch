@@ -30,7 +30,7 @@ function AllChats() {
                     querySnapshot.forEach((doc) => {
                         const docId = doc.id;
                         const participants = doc.data().participants;
-                        console.log(participants);
+                        
 
                         // Access messages within this doc
                         if (participants.includes(user.uid)) {

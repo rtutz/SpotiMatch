@@ -11,7 +11,7 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 export default function Tracks({authToken}) {
     // const accessToken = useSelector((state) => state.accessToken);
     const accessToken = useAuth(authToken);
-    // console.log('Ran useAuth in Tracks. ACCESS TOKEN RECEIVED FROM HOOK: ', accessToken);
+    // 
     const [topTracksData, setTopTracksData] = useState(null);
     const [activeButton, setActiveButton] = useState([1, 'long_term']);
     const navigate = useNavigate();

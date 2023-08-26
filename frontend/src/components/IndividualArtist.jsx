@@ -13,7 +13,7 @@ export default function IndividualArtist({authToken}) {
 
     useEffect(() => {
         if (!accessToken) return;
-        console.log('artist id' , artistId);
+        
         getIndividualArtist(accessToken, artistId).then( data => {
             setArtistData(data);
         }).catch(e => {
@@ -30,7 +30,7 @@ export default function IndividualArtist({authToken}) {
 
     }, [accessToken, artistId, Navigate])
     
-    console.log('artist data', artistData);
+    
     if (artistData) {
         return (
             <div className="container flex justify-center">

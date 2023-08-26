@@ -26,15 +26,15 @@ function Login() {
 
 
             // Set cookie so when reload occurs, user is still logged in
-            console.log('uid in login', uid);
-            console.log('email',email);
+            
+            
             localStorage.setItem('curr-user', JSON.stringify({uid, email}))
             // cookies.remove('auth-token');
             // cookies.set('auth-token', JSON.stringify({uid, email, refreshToken})); 
             navigate('/link');
         }
     ).catch(error => {
-        console.log(error);
+        
         window.alert('invalid email or password');
     })
 

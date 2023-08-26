@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 export const getProfileData = async (accessToken) => {
-    console.log('in api file. this is accestoken', accessToken);
+    
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
     };
@@ -26,7 +26,7 @@ export const getProfileData = async (accessToken) => {
         return fData
         
     } catch (e) {
-        console.log('API ERROR (error in api.jsx)');
+        
         console.error(e);
     }
 };
@@ -43,7 +43,7 @@ export const getTopTracks = async (accessToken, time_range) => {
 
         return fData;
     } catch (e) {
-        console.log('API ERROR (error in api.jsx)', e)
+        
     }
 };
 
@@ -58,7 +58,7 @@ export const getPlaylists = async (accessToken) => {
 
         return fData;
     } catch (e) {
-        console.log('API ERROR (error in api.jsx)', e)
+        
 
     }
 };
@@ -74,7 +74,7 @@ export const getIndividualArtist = async (accessToken, artistId) => {
 
         return fData;
     } catch (e) {
-        console.log('API ERROR (error in api.jsx)', e)
+        
 
     }   
 }
@@ -90,7 +90,7 @@ export const getIndividualTrack = async (accessToken, trackId) => {
 
         return fData;
     } catch (e) {
-        console.log('API ERROR (error in api.jsx)', e)
+        
 
     }   
 };
@@ -106,7 +106,7 @@ export const getTrackAnalysis = async (accessToken, trackId) => {
 
         return fData;
     } catch (e) {
-        console.log('API ERROR (error in api.jsx)', e)
+        
 
     }   
 };
@@ -122,13 +122,13 @@ export const getIndividualPlaylist = async (accessToken, playlistId) => {
 
         return fData;
     } catch (e) {
-        console.log('API ERROR (error in api.jsx)', e)
+        
 
     }   
 };
 
 export const calculateCompatability = async (playlist1URL, playlist2URL, accessToken) => {
-    console.log('access token in api calculate', accessToken);
+    
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
     };
@@ -137,7 +137,7 @@ export const calculateCompatability = async (playlist1URL, playlist2URL, accessT
 
         const playlist2Data = await axios.get(`https://api.spotify.com/v1/audio-features?ids=${playlist2URL}`, config);
 
-        console.log('playlist state as of right now:', {playlist1: playlist1Data.data, playlist2: playlist2Data.data});
+        
 
         const calculatedScore = await axios.post('http://localhost:3000/calculate', {playlist1: playlist1Data.data, playlist2: playlist2Data.data});
         
@@ -146,10 +146,10 @@ export const calculateCompatability = async (playlist1URL, playlist2URL, accessT
 
 
     } catch(e) {
-        console.log('error in calculateCompatability');
+        
         console.error(e)
     }
     // const result = await axios.post('http://localhost:3000/calculate', {playlist1, playlist2});
-    // console.log('RESULT!!!!!!!', result);
+    // 
     // return result;
 }

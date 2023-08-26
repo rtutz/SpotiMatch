@@ -4,18 +4,18 @@
 //     dataString = '';
 
 // py.stdout.on('data', function(data){
-//   console.log(data.toString());
+//   
 //   dataString += data.toString();
 // });
 // py.stdout.on('end', function(){
-//   console.log('Sum of numbers=',dataString);
+//   
 // });
 // py.stdin.write(JSON.stringify(data));
 // py.stdin.end();
 
 
 function calculateSimilarityScore(playlist1, playlist2) {
-  // console.log('in pull python');
+  // 
   // var spawn = require('child_process').spawn,
   // py    = spawn('python', ['./calculateScore.py']),
   // data = [playlist1, playlist2],
@@ -23,14 +23,14 @@ function calculateSimilarityScore(playlist1, playlist2) {
 
   // py.stdout.on('data', function(data){
   //   dataString = JSON.parse(data.toString());
-  //   console.log('dataString', dataString);
+  //   
   //   return dataString
   // });
 
   // py.stdin.write(JSON.stringify(data));
   // py.stdin.end();
-  console.log('pl1 length',playlist1.length);
-  console.log('pl2 length',playlist2.length);
+  
+  
 
   return new Promise((resolve, reject) => {
     var spawn = require('child_process').spawn,
@@ -40,7 +40,7 @@ function calculateSimilarityScore(playlist1, playlist2) {
 
     py.stdout.on('data', function (data) {
       dataString = JSON.parse(data.toString());
-      console.log(dataString);
+      
       resolve(dataString); // Resolve the promise with the dataString value
     });
 

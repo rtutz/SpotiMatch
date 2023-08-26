@@ -15,7 +15,7 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 export default function Profile({authToken}) { 
 
     const tempAccessToken = useAuth(authToken);
-    console.log('access token', tempAccessToken);
+    
 
 
     const [profileData, setProfileData] = useState(null);
@@ -24,7 +24,7 @@ export default function Profile({authToken}) {
     useEffect(() => {
         if (!tempAccessToken) return;
         getProfileData(tempAccessToken).then(data => {
-            console.log('data received', data);
+            
             if (!data) return;
             setProfileData(data);
 

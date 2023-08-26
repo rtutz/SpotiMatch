@@ -19,7 +19,7 @@ import LoginOrSignup from './components/LoginOrSignup';
 
 function App() {
   const code = new URLSearchParams(window.location.search).get('code');
-  console.log('auth token in app (parent component) :', code);
+  
 
   return (
     <Routes>

@@ -35,7 +35,7 @@ export default function IndividualPlaylist({authToken}) {
     }, [accessToken, playlistId])
 
     if (playlistData) {
-        console.log('playlistData', playlistData);
+        
     
         return (
             <div className="container">
