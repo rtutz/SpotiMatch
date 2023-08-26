@@ -58,7 +58,8 @@ function useAuth(code){
         const storedExpiresIn = localStorage.getItem('expiresIn');
 
         if (storedAccessToken && storedRefreshToken && storedExpiresIn) return
-        axios.post('http://localhost:3000/login/auth', {code})
+        // axios.post('http://localhost:3000/login/auth', {code})
+        axios.post('https://spotimatch-api.onrender.com/login/auth', {code})
             .then((res) => {
                 if (res.data.statusCode === 400) {console.error(res.data.body); throw new Error()}
                 setAccessTokenState(res.data.access_token);
@@ -76,9 +77,10 @@ function useAuth(code){
     // Automatically refreshes the tokens
     useEffect(() => {
         if (!refreshToken || !expiresIn) return;
-
+        
         const interval = setInterval(() => {
-            axios.post('http://localhost:3000/login/refresh', {refreshToken})
+            // axios.post('http://localhost:3000/login/refresh', {refreshToken})
+            axios.post('https://spotimatch-api.onrender.com/login/refresh', {refreshToken})
                 .then((res) => {
                     setAccessTokenState(res.data.access_token);
                     setExpiresIn(res.data.expires_in);

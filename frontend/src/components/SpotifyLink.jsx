@@ -9,7 +9,8 @@ function SpotifyLink(){
                 <h1 className='text-3xl tracking-widest'>Connect musically</h1>
 
                 <div className='btn-green text-lg' style={{'fontSize': "1.125rem", "lineHeight":"1.75rem", "marginTop": "2rem" }}>
-                    <a href="http://localhost:3000/login/link">Connect with Spotify</a>
+                    {/* <a href="http://localhost:3000/login/link">Connect with Spotify</a> */}
+                    <a href="https://spotimatch-api.onrender.com/login/link">Connect with Spotify</a>
                 </div>
 
                 <div className="flex flex-col items-center justify-center mt-10">

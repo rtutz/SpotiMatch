@@ -21,7 +21,8 @@ app.get('/login/link', (req, res) => {
       response_type: 'code',
       client_id: process.env.CLIENT_ID,
       scope: scope,
-      redirect_uri: "http://localhost:5173/dashboard/profile",
+      // redirect_uri: "http://localhost:5173/dashboard/profile",
+      redirect_uri: "https://spotimatch.onrender.com/dashboard/profile",
     }));
 });
 
@@ -31,7 +32,8 @@ app.post('/login/auth', (req, res) => {
     const spotifyApi = new SpotifyWebApi({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      redirectUri: "http://localhost:5173/dashboard/profile",
+      // redirectUri: "http://localhost:5173/dashboard/profile",
+      redirectUri: "https://spotimatch.onrender.com/dashboard/profile",
     });
 
     spotifyApi.authorizationCodeGrant(code).then(
@@ -53,7 +55,8 @@ app.post('/login/refresh', (req, res) => {
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    redirectUri: "http://localhost:5173/dashboard/profile",
+    // redirectUri: "http://localhost:5173/dashboard/profile",
+    redirectUri: "https://spotimatch.onrender.com/dashboard/profile",
     refreshToken: refresh_token,
   });
 
