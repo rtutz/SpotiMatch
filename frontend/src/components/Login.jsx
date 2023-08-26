@@ -54,7 +54,13 @@ function Login() {
                     <input type="text" name="email" placeholder="Email" className='px-1 py-1 w-60 rounded-md'/>
                     <input type="password" name="password" placeholder="Password" className='px-1 py-1 w-60 rounded-md'/>
                     <button type="submit" style={{"marginTop": "2rem"}} className='btn-green max-w-fit'>Login</button>
-            </form>
+                    
+                </form>
+                <div className="flex flex-col items-center justify-center mt-10">
+                    <p className="text-gray-200-spotify text-base tracking-wider mb-2">Demo account: </p>
+                    <p className="text-gray-200-spotify text-sm tracking-wider">Email: rtutz.test@gmail.com</p>
+                    <p className="text-gray-200-spotify text-sm tracking-wider">Password: rtutz.test</p>
+                </div>
             </div>
 
         </div>
