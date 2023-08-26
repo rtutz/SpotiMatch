@@ -22,7 +22,7 @@ app.get('/login/link', (req, res) => {
       client_id: process.env.CLIENT_ID,
       scope: scope,
       // redirect_uri: "http://localhost:5173/dashboard/profile",
-      redirect_uri: "https://spotimatch.onrender.com/dashboard/profile",
+      redirect_uri: "https://spotimatch.netlify.app/dashboard/profile",
     }));
 });
 
@@ -33,7 +33,7 @@ app.post('/login/auth', (req, res) => {
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       // redirectUri: "http://localhost:5173/dashboard/profile",
-      redirectUri: "https://spotimatch.onrender.com/dashboard/profile",
+      redirectUri: "https://spotimatch.netlify.app/dashboard/profile",
     });
 
     spotifyApi.authorizationCodeGrant(code).then(
@@ -56,7 +56,7 @@ app.post('/login/refresh', (req, res) => {
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     // redirectUri: "http://localhost:5173/dashboard/profile",
-    redirectUri: "https://spotimatch.onrender.com/dashboard/profile",
+    redirectUri: "https://spotimatch.netlify.app/dashboard/profile",
     refreshToken: refresh_token,
   });
 
