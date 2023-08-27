@@ -3,26 +3,10 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import sys
 import json
-import ast
+
 
 
 def calculate_similarity_score(playlist1, playlist2):
-    # Extract the song features from the JSON responses
-    # playlist1 = json.loads(playlist1)
-    # playlist2 = json.loads(playlist2)
-
-    # song.pop("type")
-    # song.pop("id")
-    # song.pop("uri")
-    # song.pop("track_href")
-    # song.pop("analysis_url")
-    #
-    # playlist2.pop("type")
-    # playlist2.pop("id")
-    # playlist2.pop("uri")
-    # playlist2.pop("track_href")
-    # playlist2.pop("analysis_url")
-
     for song in playlist1:
         song.pop("type")
         song.pop("id")
@@ -61,22 +45,6 @@ def calculate_similarity_score(playlist1, playlist2):
     compatibility_score = np.mean(similarity_scores) * 100
 
     return compatibility_score
-# def calculate_similarity_score(playlist1, playlist2):
-#     num_features = len(playlist1[0])  # Assuming all songs have the same number of features
-
-#     total_score = 0
-#     for song1, song2 in zip(playlist1, playlist2):
-#         score = 0
-#         for feature in song1:
-#             if feature != "analysis_url" and feature != "id" and feature != "track_href" and feature != "uri":
-#                 if song1[feature] == song2[feature]:
-#                     score += 1
-#         song_score = (score / num_features) * 100
-#         total_score += song_score
-
-#     compatibility_score = total_score / len(playlist1)
-#     return compatibility_score
-
 
 def get_index_for_key(key):
     key_mapping = {
@@ -98,50 +66,11 @@ def get_index_for_key(key):
     return key_mapping.get(key)
 
 
-# def normalize_features(features):
-#     feature_ranges = {
-#         'acousticness': (0, 1),
-#         'danceability': (0, 1),
-#         'duration_ms': (0, 600000),
-#         'energy': (0, 1),
-#         'instrumentalness': (0, 1),
-#         'key': (-1, 11),
-#         'liveness': (0, 1),
-#         'loudness': (-60, 0),
-#         'mode': (0, 1),
-#         'speechiness': (0, 1),
-#         'tempo': (50, 150),
-#         'time_signature': (3, 7),
-#         'valence': (0, 1)
-#     }
 
-#     # Transpose the feature matrix to work with columns
-#     features = np.array(features).T.tolist()
-
-#     # Normalize each feature to a [0, 1] range
-#     for key, values in feature_ranges.items():
-#         feature_min, feature_max = values
-
-#         index = get_index_for_key(key)
-#         if index is None:
-#             continue
-
-#         normalized_features = []
-#         for value in features[index]:
-#             normalized_value = (float(value) - feature_min) / \
-#                 (feature_max - feature_min)
-#             normalized_features.append(normalized_value)
-
-#         features[index] = normalized_features
-
-#     # Transpose the features back to the original shape
-#     features = np.array(features).T.tolist()
-
-#     return features
 
 def normalize_features(features):
     # Transpose the feature matrix to work with columns
-    features = np.array(features).T.tolist()
+    features =  (features).T.tolist()
 
     # Normalize each feature to a [0, 1] range
     for i in range(len(features)):
