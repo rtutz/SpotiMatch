@@ -123,44 +123,14 @@ app.post('/calculate', async (req, res) => {
   
   try {
     const val = await calculateSimilarityScore(playlist1, playlist2);
+    console.log("VAL RECEIVED ", val);
     res.json(val);
   } catch (error) {
+    console.log("ERROR IN COMPATABILITY SCORE");
     console.error(error);
     res.json(error)
   }
 });
-
-// app.post('/calculate', async (req, res) => {
-//   const playlist1 = req.body.playlist1;
-//   const playlist2 = req.body.playlist2;
-
-//   // 
-//   // 
-
-//   // Write the input data to a file
-  
-//   const inputFilePath = 'input.json';
-//   fs.writeFileSync(inputFilePath, JSON.stringify([playlist1, playlist2]));
-
-//   try {
-//     // Execute the Python script
-//     const resultFilePath = 'output.json';
-//     await calculateSimilarityScore(inputFilePath, resultFilePath);
-
-//     // Read the result from the output file
-//     const result = JSON.parse(fs.readFileSync(resultFilePath));
-
-//     // Delete the temporary files
-//     fs.unlinkSync(inputFilePath);
-//     fs.unlinkSync(resultFilePath);
-
-//     
-//     res.json(result);
-//   } catch (error) {
-//     
-//     res.json(error);
-//   }
-// });
 
 
 app.listen(3000);
