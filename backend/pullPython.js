@@ -34,7 +34,7 @@ function calculateSimilarityScore(playlist1, playlist2) {
 
   return new Promise((resolve, reject) => {
     var spawn = require('child_process').spawn,
-      py = spawn('python', ['./calculateScore.py']),
+      py = spawn('python', ['./calculateScore.py', "numpy","sklearn"]),
       data = [playlist1, playlist2],
       dataString = '';
 

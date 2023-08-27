@@ -1,3 +1,10 @@
+import os
+import sys
+os.system('python3 -m pip install {}'.format(sys.argv[1]))
+os.system('python3 -m pip install {}'.format(sys.argv[2]))
+
+
+
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import sys
