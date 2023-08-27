@@ -34,14 +34,14 @@ function calculateSimilarityScore(playlist1, playlist2) {
 
   return new Promise((resolve, reject) => {
     var spawn = require('child_process').spawn,
-      py = spawn('python', ['./calculateScore.py', "numpy","sklearn"]),
+      py = spawn('python', ['./calculateScore.py']),
       data = [playlist1, playlist2],
       dataString = '';
 
     py.stdout.on('data', function (data) {
       dataString = JSON.parse(data.toString());
 
-      console.log("DATA STRING " + dataString);
+      console.log("DATA STRING " + data);
       
       resolve(dataString); // Resolve the promise with the dataString value
     });
