@@ -19,8 +19,6 @@ import LoginOrSignup from './components/LoginOrSignup';
 
 function App() {
   const code = new URLSearchParams(window.location.search).get('code');
-  
-
   return (
     <Routes>
       <Route path="/" element={<LoginOrSignup />} />
