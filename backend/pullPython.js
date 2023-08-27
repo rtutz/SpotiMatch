@@ -117,6 +117,7 @@ function cosineSimilarity(features1, features2) {
   return dotProduct / (Math.sqrt(norm1) * Math.sqrt(norm2));
 }
 
+module.exports = calculateSimilarityScore;
 
 
 // // var spawn = require('child_process').spawn,
