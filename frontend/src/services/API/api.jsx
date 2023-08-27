@@ -144,7 +144,7 @@ export const calculateCompatability = async (playlist1URL, playlist2URL, accessT
         // playlist1Data.data, playlist2: playlist2Data.data});
         const calculatedScore = await axios.post('https://spotimatch-api.onrender.com/calculate', {playlist1: playlist1Data.data, playlist2: playlist2Data.data});
         
-
+        console.log("CALCULATED SCORE FROM BACKEND ", calculatedScore);
         return calculatedScore.data
 
 
