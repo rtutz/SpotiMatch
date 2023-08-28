@@ -209,7 +209,7 @@ function Chat({authToken}) {
 
           {(showCompatability && compatabilityScore) && <Popup score={compatabilityScore} setShowCompatability={setShowCompatability} scrollToBottom={scrollToBottom} />}
         
-          <div id="headerNameAndPic" className="flex items-center m-5" >
+          <div id="headerNameAndPic" className="flex items-center m-5 z-0" >
             <img className="w-10 h-10 rounded-full" src={receiverData.spotify.currUserProfile.images[0].url} alt="" />
             <h1 className="ml-4 font-black tracking-wide">{receiverData.spotify.currUserProfile.display_name}</h1>
 
