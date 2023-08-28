@@ -83,7 +83,7 @@ function Dashboard({ code }) {
                 </Link>
             </div>
 
-            <Link to='https://www.youtube.com/'>
+            <Link to='https://github.com/rtutz/SpotiMatch'>
             <img className='mx-auto' src={github} alt="" />
             </Link>
 
